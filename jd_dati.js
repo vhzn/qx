@@ -90,7 +90,22 @@ async function jdImmortalAnswer() {
         await getHomeData()
         if ($.risk) return
         await getQuestions()
+        await getQuestions()
+        await getQuestions()
+        await getQuestions()
+        await getQuestions()
+        await getQuestions()
+        await getQuestions()
+        await getQuestions()
+        await getQuestions()
+        await getQuestions()
+        await getQuestions()
+        await getQuestions()
+        await getQuestions()
+        await getQuestions()
+        await getQuestions()
         await showMsg()
+        await exchange()
     } catch (e) {
         $.logErr(e)
     }
@@ -121,6 +136,30 @@ function getHomeData(info = false) {
                 }
             } catch (e) {
                 $.logErr(e, resp);
+            } finally {
+                resolve();
+            }
+        })
+    })
+}
+
+function exchange() {
+    return new Promise(resolve => {
+        $.get(taskUrl('mcxhd_brandcity_exchange'),(err,resp,data) =>{
+            try{
+                if (err) {
+                    console.log(`${JSON.stringify(err)}`)
+                    console.log(`${$.name} API请求失败，请检查网路重试`)
+                } else{
+                    data = JSON.parse(data);
+                    if (data.retCode === '200') {
+                        console.log(`本次活动共获取积分 ${data.result.consumedUserScore}\n兑换倍数为 ${data.result.userGrade.exchageRate}\n最终获得京豆 ${data.result.receivedJbeanNum}个`)
+                    } else {
+                        console.log(data.retMessage);
+                    }
+                }
+            } catch (e) {
+                console.log(e)
             } finally {
                 resolve();
             }
@@ -179,6 +218,7 @@ function getQuestions() {
                         }
                     } else {
                         console.log(`答题开启失败`)
+                        return
                     }
                 }
             } catch (e) {
