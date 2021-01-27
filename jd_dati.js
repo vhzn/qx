@@ -1,8 +1,9 @@
 
+
 /*
 京东神仙书院答题
 
-修改自 LXK9301 大佬的脚本
+修改自LXK9301大神的脚本
 
 活动时间:2021-1-27至2021-2-5
 活动入口: 京东app-我的-神仙书院
@@ -164,9 +165,7 @@ function getQuestions() {
                             if ($.zhe_optionId === null) {
                                 $.zhe_optionId = vo.options[1].optionId;
                             }
-
-                                  await $.wait(3 * 1000)
-
+                                  await $.wait(2 * 1000)
 
                             let b = {
                                 "questionToken": vo.questionToken,
@@ -191,7 +190,6 @@ function getQuestions() {
         })
     })
 }
-
 
 
 function answer(body = {}) {
@@ -380,24 +378,7 @@ function TotalBean() {
     })
 }
 
-function requireTk() {
-    return new Promise(resolve => {
-        $.get({
-            url: `http://qn6l5d6wm.hn-bkt.clouddn.com/question.json?t=${new Date().getTime()}`,
-            headers: {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4371.0 Safari/537.36'
-            }
-        }, (err, resp, data) => {
-            try {
-                $.tk = JSON.parse(data).RECORDS
-            } catch (e) {
-                console.log(e)
-            } finally {
-                resolve()
-            }
-        })
-    })
-}
+
 
 function safeGet(data) {
     try {
