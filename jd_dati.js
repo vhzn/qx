@@ -13,15 +13,12 @@
 ============Quantumultx===============
 [task_local]
 #京东神仙书院答题
-20 8 * * * https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_dati.js, tag=京东神仙书院答题, img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png, enabled=true
-
+10 8 * * * https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_dati.js, tag=京东神仙书院答题, img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png, enabled=true
 ================Loon==============
 [Script]
-cron "20 8 * * *" script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_dati.js,tag=京东神仙书院答题
-
+cron "10 8 * * *" script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_dati.js,tag=京东神仙书院答题
 ===============Surge=================
 京东神仙书院答题 = type=cron,cronexp="20 8 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_dati.js
-
 ============小火箭=========
 京东神仙书院答题 = type=cron,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_dati.js, cronexpr="20 8 * * *", timeout=3600, enable=true
  */
@@ -90,21 +87,37 @@ async function jdImmortalAnswer() {
         await getHomeData()
         if ($.risk) return
         await getQuestions()
+        await $.wait(2 * 1000)
         await getQuestions()
+        await $.wait(2 * 1000)
         await getQuestions()
+        await $.wait(2 * 1000)
         await getQuestions()
+        await $.wait(2 * 1000)
         await getQuestions()
+        await $.wait(2 * 1000)
         await getQuestions()
+        await $.wait(2 * 1000)
         await getQuestions()
+        await $.wait(2 * 1000)
         await getQuestions()
+        await $.wait(2 * 1000)
         await getQuestions()
+        await $.wait(2 * 1000)
         await getQuestions()
+        await $.wait(2 * 1000)
         await getQuestions()
+        await $.wait(2 * 1000)
         await getQuestions()
+        await $.wait(2 * 1000)
         await getQuestions()
+        await $.wait(2 * 1000)
         await getQuestions()
+        await $.wait(2 * 1000)
         await getQuestions()
+        await $.wait(2 * 1000)
         await showMsg()
+        await $.wait(2 * 1000)
         await exchange()
     } catch (e) {
         $.logErr(e)
