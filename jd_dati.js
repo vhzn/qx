@@ -176,43 +176,44 @@ function getQuestions() {
                     console.log(`${$.name} API请求失败，请检查网路重试`)
                 } else {
                     data = JSON.parse(data);
-                    if (data && data['retCode'] === "200") {
-                        console.log(`答题开启成功`)
-                        $.coin = $.coin - 100;
-                        let i = 0, questionList = []
-
-                        for (let vo of data.result.questionList) {
-                            $.question = vo
-                            console.log(`去查询第${++i}题：【${vo.questionStem}】`)
-                            $.zhe_optionId = null;
-
-                            await getAnswer(vo.questionId);
-
-                            if ($.zhe_optionId === null) {
-                                $.zhe_optionId = vo.options[1].optionId;
-                                $.zhe_optionDesc = vo.options[1].optionDesc;
-                            }
-                            await $.wait(2 * 1000)
-
-                            let b = {
-                                "questionToken": vo.questionToken,
-                                "optionId": $.zhe_optionId,
-                                "optionDesc": $.zhe_optionDesc,
-                                "questionId": vo.questionId,
-                                "questionStem": vo.questionStem,
-                            }
-
-                            await answer(b)
-
+                    if (data) {
+                        switch (data['retCode']) {
+                            case "200":
+                                console.log(`答题开启成功`)
+                                $.coin = $.coin - 100;
+                                let i = 0, questionList = []
+                                for (let vo of data.result.questionList) {
+                                    $.question = vo
+                                    console.log(`去查询第${++i}题：【${vo.questionStem}】`)
+                                    $.zhe_optionId = null;
+                                    await getAnswer(vo.questionId);
+                                    if ($.zhe_optionId === null) {
+                                        $.zhe_optionId = vo.options[1].optionId;
+                                        $.zhe_optionDesc = vo.options[1].optionDesc;
+                                    }
+                                    await $.wait(2 * 1000)
+                                    let b = {
+                                        "questionToken": vo.questionToken,
+                                        "optionId": $.zhe_optionId,
+                                        "optionDesc": $.zhe_optionDesc,
+                                        "questionId": vo.questionId,
+                                        "questionStem": vo.questionStem,
+                                    }
+                                    await answer(b)
+                                }
+                                break;
+                            case "325":
+                                console.log(data['retMessage']);
+                                $.coin = 0;                           
+                                break;
+                            case "326":
+                                console.log(data['retMessage']);
+                                $.coin = 0;
+                                break;
+                            default:
+                                console.log(data);
+                                break;
                         }
-                    }
-                    else if (data['retCode'] === "325" ||data['retCode'] === "326") {
-                        
-                        $.coin = 0;
-
-                    } else {
-                        console.log(`答题开启失败`)
-                        return
                     }
                 }
             } catch (e) {
