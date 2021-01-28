@@ -117,8 +117,6 @@ async function jdImmortalAnswer() {
         await getQuestions()
         await $.wait(2 * 1000)
         await showMsg()
-        await $.wait(2 * 1000)
-        await exchange()
     } catch (e) {
         $.logErr(e)
     }
