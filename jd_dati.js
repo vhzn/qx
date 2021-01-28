@@ -206,7 +206,7 @@ function getQuestions() {
 
                         }
                     }
-                    if (data['retCode'] === "325" ||data['retCode'] === "326") {
+                    else if (data['retCode'] === "325" ||data['retCode'] === "326") {
                         
                         $.coin = 0;
 
