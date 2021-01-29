@@ -214,9 +214,9 @@ function taskPost(functionId, body,type = 0) {
                         switch (type) {
                             case 1:
                                 if (data.data.result.userAwardsCacheDto.type == 2) {
-                                    
+                                    console.log(`成功获得${data.data.result.userAwardsCacheDto.jBeanAwardVo.prizeName}`)
                                 }
-                                console.log(`成功获得${data.data.result.userAwardsCacheDto.jBeanAwardVo.prizeName}`)
+                               
                                 break;
                         
                             default:
