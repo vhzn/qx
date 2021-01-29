@@ -1,5 +1,6 @@
 /*
-"星"意送好礼 
+
+活动入口：边赚边玩-"星"意送好礼 
 短期活动
 
 更新时间：2021-1-29
@@ -34,7 +35,7 @@ if ($.isNode()) {
     };
 } else {
     let cookiesData = $.getdata('CookiesJD') || "[]";
-    cookiesData = jsonParse(cookiesData);
+    cookiesData = JSON.parse(cookiesData);
     cookiesArr = cookiesData.map(item => item.cookie);
     cookiesArr.reverse();
     cookiesArr.push(...[$.getdata('CookieJD2'), $.getdata('CookieJD')]);
