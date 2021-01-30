@@ -92,7 +92,7 @@ async function jdImmortalAnswer() {
                 await $.wait(2 * 1000)
             }
         }
-await exchange();
+// await exchange();
         await showMsg()
     } catch (e) {
         $.logErr(e)
