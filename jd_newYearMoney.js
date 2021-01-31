@@ -2,20 +2,20 @@
 京东新年压岁钱
 
 活动入口：首页搜索栏-压岁钱直达
-脚本更新地址：hhttps://raw.githubusercontent.com/i-chenzhe/qx/main/jd_newYearMoney.js
+脚本更新地址：https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_newYearMoney.js
 脚本兼容: Quantumult X, Surge, Loon, JSBox, Node.js
 
 ==========Quantumult X==========
 [task_local]
 #京东新年压岁钱
-10 10 * * * hhttps://raw.githubusercontent.com/i-chenzhe/qx/main/jd_newYearMoney.js, tag=京东新年压岁钱, enabled=true
+10 10 * * * https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_newYearMoney.js, tag=京东新年压岁钱, enabled=true
 =======Loon========
 [Script]
-cron "10 10 * * *" script-path=hhttps://raw.githubusercontent.com/i-chenzhe/qx/main/jd_newYearMoney.js,tag=京东新年压岁钱
+cron "10 10 * * *" script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_newYearMoney.js,tag=京东新年压岁钱
 ========Surge==========
-京东新年压岁钱 = type=cron,cronexp="10 10 * * *",wake-system=1,timeout=620,script-path=hhttps://raw.githubusercontent.com/i-chenzhe/qx/main/jd_newYearMoney.js
+京东新年压岁钱 = type=cron,cronexp="10 10 * * *",wake-system=1,timeout=620,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_newYearMoney.js
 =======小火箭=====
-京东新年压岁钱 = type=cron,script-path=hhttps://raw.githubusercontent.com/i-chenzhe/qx/main/jd_newYearMoney.js, cronexpr="10 10 * * *", timeout=200, enable=true
+京东新年压岁钱 = type=cron,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_newYearMoney.js, cronexpr="10 10 * * *", timeout=200, enable=true
  */
 const $ = new Env('新年压岁钱');
 //Node.js用户请在jdCookie.js处填写京东ck;
