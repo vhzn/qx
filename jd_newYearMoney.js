@@ -138,12 +138,12 @@ async function helpFriends() {
                 continue;
             }
             const assistFriendRes = await doTask('newyearmoney_assist', { "inviteId": code });
-            if (assistFriendRes && assistFriendRes.data.bizCode === 0) {
-                console.log(`${assistFriendRes.data.bizMsg}`
-            } else if (assistFriendRes.data.bizCode === -523) {
-                console.log(`${assistFriendRes.data.bizMsg}`)
-                break;
-            }
+//             if (assistFriendRes && assistFriendRes.data.bizCode === 0) {
+//                 console.log(`${assistFriendRes.data.bizMsg}`
+//             } else if (assistFriendRes.data.bizCode === -523) {
+//                 console.log(`${assistFriendRes.data.bizMsg}`)
+//                 break;
+//             }
         }
         await $.wait(2000);
     }
