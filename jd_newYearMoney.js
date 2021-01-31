@@ -78,12 +78,17 @@ const JD_API_HOST = 'https://api.m.jd.com';
     })
 async function newYearMoney() {
     await requireBaseConfig();
-    await shareCodesFormat();
+    $.risk = false;
+    if (!$.risk) {
+        await shareCodesFormat();
     await $.wait(2000);
     await helpFriends();
     await $.wait(2000);
     await consumeCard();
     await requireBaseConfig('true');
+        
+    }
+    console.log('京东说活动太火爆了～')
 
 }
 
@@ -138,12 +143,12 @@ async function helpFriends() {
                 continue;
             }
             const assistFriendRes = await doTask('newyearmoney_assist', { "inviteId": code });
-//             if (assistFriendRes && assistFriendRes.data.bizCode === 0) {
-//                 console.log(`${assistFriendRes.data.bizMsg}`
-//             } else if (assistFriendRes.data.bizCode === -523) {
-//                 console.log(`${assistFriendRes.data.bizMsg}`)
-//                 break;
-//             }
+            if (assistFriendRes && assistFriendRes.data.bizCode === 0) {
+                console.log(`${assistFriendRes.data.result.bizMsg}`)
+            } else if (assistFriendRes.data.bizCode === -523) {
+                console.log(`${assistFriendRes.data.bizMsg}`)
+                break;
+            }
         }
         await $.wait(2000);
     }
@@ -151,7 +156,7 @@ async function helpFriends() {
 }
 
 async function requireBaseConfig(noti = 'false') {
-    
+
     let body = { "inviteId": "IzuJjmb3diT_T659N_w8swwzqoLy_-NXMybbSpw" }
     return new Promise(resolve => {
         $.post(taskPostUrl('newyearmoney_home', body), (err, resp, data) => {
@@ -161,15 +166,21 @@ async function requireBaseConfig(noti = 'false') {
                     console.log(`${$.name} API请求失败，请检查网路重试`)
                 } else {
                     data = JSON.parse(data);
-                    $.cardList = data.data.result.cardInfos;
-                    $.userInfo = data.data.result.userActBaseInfo;
-                    if (noti === 'true') {
-                        console.log(`当前共有压岁钱 ¥${$.userInfo.poolMoney}`)
+                    if (data.data.bizCode === 0) {
+                        $.cardList = data.data.result.cardInfos;
+                        $.userInfo = data.data.result.userActBaseInfo;
+                        if (noti === 'true') {
+                            console.log(`当前共有压岁钱 ¥${$.userInfo.poolMoney}`)
+                        }
+                        else {
+                            console.log(`初始化完成，拥有${$.cardList.length}张卡片。\n当前压岁钱为¥${$.userInfo.poolMoney}\n你的好友助力码：${$.userInfo.inviteId}`);
+                        }
+                    } else if (data.data.bizCode === -1001) {
+                        $.risk = true;
+                        console.log('账号风控。');
                     }
-                    else {
-                        console.log(`初始化完成，拥有${$.cardList.length}张卡片。\n当前压岁钱为¥${$.userInfo.poolMoney}\n你的好友助力码：${$.userInfo.inviteId}`);
-                    }
-                    
+
+
                 }
             } catch (e) {
                 $.logErr(e, resp)
@@ -224,7 +235,7 @@ function taskPostUrl(functionId, body = {}) {
 function readShareCode() {
     console.log(`开始`)
     return new Promise(async resolve => {
-        $.get({ url: `https://api.r2ray.com/jd.newYearMoney/index?num=${randomCount}`}, (err, resp, data) => {
+        $.get({ url: `https://api.r2ray.com/jd.newYearMoney/index?num=${randomCount}` }, (err, resp, data) => {
             try {
                 if (err) {
                     console.log(`${JSON.stringify(err)}`)
