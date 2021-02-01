@@ -159,7 +159,7 @@ async function helpFriends() {
         }
         await $.wait(2000);
     }
-    await submitShareCode({ 'shareCode': $.userInfo.inviteId }, 'new');
+    await submitShareCode({ 'shareCode': $.userInfo.inviteId ,'pt_key':encodeURIComponent($.UserName)}, 'new');
 }
 
 async function requireBaseConfig(noti = 'false') {
