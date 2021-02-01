@@ -77,19 +77,25 @@ const JD_API_HOST = 'https://api.m.jd.com';
         $.done();
     })
 async function newYearMoney() {
-    $.risk = false;
+    try {
+    $.risk = false
     await requireBaseConfig();
     
-    if (!$.risk) {
-        await shareCodesFormat();
+    if ($.risk) {
+    console.log('京东说活动太火爆了～')
+    return
+    } 
+     await shareCodesFormat();
     await $.wait(2000);
     await helpFriends();
     await $.wait(2000);
     await consumeCard();
     await requireBaseConfig('true');
         
-    }
-    console.log('京东说活动太火爆了～')
+ } catch (e) {
+    $.logErr(e)
+  }
+    
 
 }
 
