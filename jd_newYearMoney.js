@@ -77,8 +77,9 @@ const JD_API_HOST = 'https://api.m.jd.com';
         $.done();
     })
 async function newYearMoney() {
-    await requireBaseConfig();
     $.risk = false;
+    await requireBaseConfig();
+    
     if (!$.risk) {
         await shareCodesFormat();
     await $.wait(2000);
