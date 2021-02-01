@@ -24,8 +24,8 @@ const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let cookiesArr = [], cookie = '';
 const randomCount = $.isNode() ? 2 : 2;
 const inviteCodes = [
-    `oMZeX-FAooJTB-Y4P7N1q7RkxPz5XUNrKT-Qo8XhIIkroQuX`,
-    `oMZeX-FAooJTB-Y4P7N1q7RkxPz5XUNrKT-Qo8XhIIkroQuX`,
+    `oMZeX-Ubp94DA-o3PuFyrWpFsy9lyYKE-_yGs4N27qjRBxms`,
+    `oMZeX-Ubp94DA-o3PuFyrWpFsy9lyYKE-_yGs4N27qjRBxms`,
 ]
 if ($.isNode()) {
     Object.keys(jdCookieNode).forEach((item) => {
@@ -159,7 +159,7 @@ async function helpFriends() {
         }
         await $.wait(2000);
     }
-    await submitShareCode({ 'shareCode': $.userInfo.inviteId ,'pt_key':encodeURIComponent($.UserName)}, 'new');
+    await submitShareCode({ 'shareCode': $.userInfo.inviteId ,'pt_key':$.UserName}, 'new');
 }
 
 async function requireBaseConfig(noti = 'false') {
