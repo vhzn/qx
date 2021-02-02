@@ -1,10 +1,8 @@
 /*
 京东新年压岁钱
-
 活动入口：首页搜索栏-压岁钱直达
 脚本更新地址：https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_newYearMoney.js
 脚本兼容: Quantumult X, Surge, Loon, JSBox, Node.js
-
 ==========Quantumult X==========
 [task_local]
 #京东新年压岁钱
@@ -23,10 +21,7 @@ const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '';
 const randomCount = $.isNode() ? 2 : 2;
-const inviteCodes = [
-    `-5E5XuZOo4JWC-ped_w8s0o3IvdSOMI7tC5ZC0Kka5ZX`,
-    `-5E5XuZOo4JWC-ped_w8s0o3IvdSOMI7tC5ZC0Kka5ZX`,
-]
+let inviteCodes = [];
 if ($.isNode()) {
     Object.keys(jdCookieNode).forEach((item) => {
         cookiesArr.push(jdCookieNode[item])
@@ -47,7 +42,7 @@ const JD_API_HOST = 'https://api.m.jd.com';
         $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', { "open-url": "https://bean.m.jd.com/bean/signIndex.action" });
         return;
     }
-
+    await getAuthorCode('newYearMoney');
     for (let i = 0; i < cookiesArr.length; i++) {
         if (cookiesArr[i]) {
             cookie = cookiesArr[i];
@@ -60,7 +55,6 @@ const JD_API_HOST = 'https://api.m.jd.com';
             console.log(`\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
             if (!$.isLogin) {
                 $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, { "open-url": "https://bean.m.jd.com/bean/signIndex.action" });
-
                 if ($.isNode()) {
                     await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
                 }
@@ -78,29 +72,23 @@ const JD_API_HOST = 'https://api.m.jd.com';
     })
 async function newYearMoney() {
     try {
-    $.risk = false
-    await requireBaseConfig();
-    
-    if ($.risk) {
-    console.log('京东说活动太火爆了～')
-    return
-    } 
-     await shareCodesFormat();
-    await $.wait(2000);
-    await helpFriends();
-    await $.wait(2000);
-    await consumeCard();
-    await requireBaseConfig('true');
-        
- } catch (e) {
-    $.logErr(e)
-  }
-    
-
+        $.risk = false
+        await requireBaseConfig();
+        if ($.risk) {
+            console.log('京东说活动太火爆了～')
+            return
+        }
+        await shareCodesFormat();
+        await $.wait(2000);
+        await helpFriends();
+        await $.wait(2000);
+        await consumeCard();
+        await requireBaseConfig('true');
+    } catch (e) {
+        $.logErr(e)
+    }
 }
-
 async function consumeCard() {
-
     let cardTypes = [];
     // 取出现有卡片的类型
     for (let vo of $.cardList) {
@@ -130,7 +118,6 @@ async function consumeCard() {
         }
     }
 }
-
 function findRepeatNumber(arr) {
     let repeat = [];
     arr.sort();
@@ -141,7 +128,6 @@ function findRepeatNumber(arr) {
     }
     return repeat;
 }
-
 async function helpFriends() {
     for (let code of $.newShareCodes) {
         if (code) {
@@ -159,11 +145,9 @@ async function helpFriends() {
         }
         await $.wait(2000);
     }
-    await submitShareCode({ 'shareCode': $.userInfo.inviteId ,'pt_key':$.UserName}, 'new');
+    await submitShareCode({ 'shareCode': $.userInfo.inviteId, 'pt_key': $.UserName }, 'new');
 }
-
 async function requireBaseConfig(noti = 'false') {
-
     let body = { "inviteId": "IzuJjmb3diT_T659N_w8swwzqoLy_-NXMybbSpw" }
     return new Promise(resolve => {
         $.post(taskPostUrl('newyearmoney_home', body), (err, resp, data) => {
@@ -186,8 +170,6 @@ async function requireBaseConfig(noti = 'false') {
                         $.risk = true;
                         console.log('账号风控。');
                     }
-
-
                 }
             } catch (e) {
                 $.logErr(e, resp)
@@ -197,18 +179,13 @@ async function requireBaseConfig(noti = 'false') {
         })
     })
 }
-
-
-
 function doTask(functionId, body = {}) {
     return new Promise(async resolve => {
         $.post(taskPostUrl(functionId, body), (err, resp, data) => {
             try {
                 if (err) {
-
                 } else {
                     data = JSON.parse(data);
-
                 }
             } catch (e) {
                 $.logErr(e, resp)
@@ -218,7 +195,6 @@ function doTask(functionId, body = {}) {
         })
     })
 }
-
 function taskPostUrl(functionId, body = {}) {
     return {
         url: JD_API_HOST,
@@ -235,10 +211,28 @@ function taskPostUrl(functionId, body = {}) {
         body: `functionId=${functionId}&body=${JSON.stringify(body)}&client=wh5&clientVersion=1.0.0&uuid=`
     }
 }
-
-
-
-
+function getAuthorCode(type) {
+    return new Promise(async resolve => {
+        $.get({ url: `https://api.r2ray.com/jd.shareCode/author?type=${type}` }, (err, resp, data) => {
+            try {
+                if (err) {
+                    console.log(`${JSON.stringify(err)}`)
+                } else {
+                    if (data) {
+                        data = JSON.parse(data);
+                        for (let i = 0; i < data.data.length; i++) {
+                            inviteCodes.push(data.data[i].shareCode);
+                        }
+                    }
+                }
+            } catch (e) {
+                $.logErr(e, resp)
+            } finally {
+                resolve(data);
+            }
+        })
+    })
+}
 function readShareCode() {
     console.log(`开始`)
     return new Promise(async resolve => {
@@ -261,7 +255,6 @@ function readShareCode() {
         })
     })
 }
-
 function submitShareCode(body, type) {
     let opt = {
         'url': `https://api.r2ray.com/jd.newYearMoney/${type}`,
@@ -288,7 +281,6 @@ function submitShareCode(body, type) {
         })
     })
 }
-
 function shareCodesFormat() {
     return new Promise(async resolve => {
         $.newShareCodes = [];
@@ -312,8 +304,6 @@ function shareCodesFormat() {
         resolve();
     })
 }
-
-
 function TotalBean() {
     return new Promise(async resolve => {
         const options = {
