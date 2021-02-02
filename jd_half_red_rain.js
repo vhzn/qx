@@ -1,5 +1,6 @@
 /*
 超级直播间红包雨
+具体活动到什么是我没留意，大概设置了一下2月3日至8日。
 每天20-23半点可领
 更新时间：2021年2月3日
 更新地址：https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_half_red_rain.js
@@ -8,7 +9,7 @@
 ============Quantumultx===============
 [task_local]
 #超级直播间红包雨
-30,31 20-23 4-8 2 * https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_half_red_rain.js, tag=超级直播间红包雨, img-url=https://raw.githubusercontent.com/yogayyy/Scripts/master/Icon/shylocks/jd_live_redrain2.jpg, enabled=true
+30,31 20-23 3-8 2 * https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_half_red_rain.js, tag=超级直播间红包雨, img-url=https://raw.githubusercontent.com/yogayyy/Scripts/master/Icon/shylocks/jd_live_redrain2.jpg, enabled=true
 ================Loon==============
 [Script]
 cron "30,31 20-23 4-8 2 *" script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_half_red_rain.js, tag=超级直播间红包雨
