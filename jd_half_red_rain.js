@@ -119,9 +119,6 @@ function getRedRain() {
                 $.activityId = url.substr(url.indexOf("id=") + 3)
                 $.st = act.startTime
                 $.ed = act.endTime
-                console.log($.activityId)
-                console.log(`下一场红包雨开始时间：${new Date($.st)}`)
-                console.log(`下一场红包雨结束时间：${new Date($.ed)}`)
               } else {
                 console.log(`暂无红包雨`)
               }
