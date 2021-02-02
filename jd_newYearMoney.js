@@ -24,8 +24,8 @@ const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let cookiesArr = [], cookie = '';
 const randomCount = $.isNode() ? 2 : 2;
 const inviteCodes = [
-    `oMZeX-Ubp94DA-o3PuFyrWpFsy9lyYKE-_yGs4N27qjRBxms`,
-    `oMZeX-Ubp94DA-o3PuFyrWpFsy9lyYKE-_yGs4N27qjRBxms`,
+    `-5E5XuZOo4JWC-ped_w8s0o3IvdSOMI7tC5ZC0Kka5ZX`,
+    `-5E5XuZOo4JWC-ped_w8s0o3IvdSOMI7tC5ZC0Kka5ZX`,
 ]
 if ($.isNode()) {
     Object.keys(jdCookieNode).forEach((item) => {
