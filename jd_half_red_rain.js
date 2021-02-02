@@ -2,20 +2,20 @@
 超级直播间红包雨
 每天20-23半点可领
 活动时间：2021年1月25日
-更新地址：https://raw.githubusercontent.com/Tartarus2014/Script/master/jd_live_redrain.js
+更新地址：https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_half_red_rain.js
 已支持IOS双京东账号, Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, 小火箭，JSBox, Node.js
 ============Quantumultx===============
 [task_local]
 #超级直播间红包雨
-30,31 20-23/1 28 1 * https://raw.githubusercontent.com/Tartarus2014/Script/master/jd_live_redrain.js, tag=超级直播间红包雨, img-url=https://raw.githubusercontent.com/yogayyy/Scripts/master/Icon/shylocks/jd_live_redrain2.jpg, enabled=true
+30,31 20-23 4-8 2 * https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_half_red_rain.js, tag=超级直播间红包雨, img-url=https://raw.githubusercontent.com/yogayyy/Scripts/master/Icon/shylocks/jd_live_redrain2.jpg, enabled=true
 ================Loon==============
 [Script]
-cron "30,31 20-23/1 28 1 *" script-path=https://raw.githubusercontent.com/Tartarus2014/Script/master/jd_live_redrain.js, tag=超级直播间红包雨
+cron "30,31 20-23 4-8 2 *" script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_half_red_rain.js, tag=超级直播间红包雨
 ===============Surge=================
-超级直播间红包雨 = type=cron,cronexp="30,31 20-23/1 28 1 *",wake-system=1,timeout=200,script-path=https://raw.githubusercontent.com/Tartarus2014/Script/master/jd_live_redrain.js
+超级直播间红包雨 = type=cron,cronexp="30,31 20-23 4-8 2 *",wake-system=1,timeout=200,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_half_red_rain.js
 ============小火箭=========
-超级直播间红包雨 = type=cron,script-path=https://raw.githubusercontent.com/Tartarus2014/Script/master/jd_live_redrain.js, cronexpr="30,31 20-23/1 28 1 *", timeout=200, enable=true
+超级直播间红包雨 = type=cron,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_half_red_rain.js, cronexpr="30,31 20-23 4-8 2 *", timeout=200, enable=true
  */
 const $ = new Env('超级直播间红包雨');
 const notify = $.isNode() ? require('./sendNotify') : '';
