@@ -92,7 +92,7 @@ async function jdImmortalAnswer() {
                 await $.wait(2 * 1000)
             }
         }
-// await exchange();
+        await exchange();
         await showMsg()
     } catch (e) {
         $.logErr(e)
@@ -205,7 +205,7 @@ function getQuestions() {
                                 break;
                             case "325":
                                 console.log(data['retMessage']);
-                                $.coin = 0;                           
+                                $.coin = 0;
                                 break;
                             case "326":
                                 console.log(data['retMessage']);
