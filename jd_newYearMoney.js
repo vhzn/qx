@@ -137,7 +137,7 @@ async function helpFriends() {
             }
             const assistFriendRes = await doTask('newyearmoney_assist', { "inviteId": code });
             if (assistFriendRes && assistFriendRes.data.bizCode === 0) {
-                console.log(`${assistFriendRes.data.result.bizMsg}`)
+                console.log(`${assistFriendRes.data.result.msg}`)
             } else if (assistFriendRes.data.bizCode === -523) {
                 console.log(`${assistFriendRes.data.bizMsg}`)
                 break;
