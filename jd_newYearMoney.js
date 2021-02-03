@@ -21,7 +21,7 @@ const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '';
 const randomCount = $.isNode() ? 2 : 2;
-let inviteCodes = [];
+const inviteCodes = [];
 if ($.isNode()) {
     Object.keys(jdCookieNode).forEach((item) => {
         cookiesArr.push(jdCookieNode[item])
@@ -221,7 +221,7 @@ function getAuthorCode(type) {
                     if (data) {
                         data = JSON.parse(data);
                         for (let i = 0; i < data.data.length; i++) {
-                            inviteCodes.push(data.data[i].shareCode);
+                            inviteCodes.push(data.data[i].share_code);
                         }
                     }
                 }
@@ -290,7 +290,7 @@ function shareCodesFormat() {
         } else {
             console.log(`由于您第${$.index}个京东账号未提供shareCode,将采纳本脚本自带的助力码\n`)
             const tempIndex = $.index > inviteCodes.length ? (inviteCodes.length - 1) : ($.index - 1);
-            $.newShareCodes = inviteCodes[tempIndex].split('@');
+            $.newShareCodes = inviteCodes;
         }
         const readShareCodeRes = await readShareCode();
         let resShareCode = [];
