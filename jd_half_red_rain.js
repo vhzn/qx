@@ -8,14 +8,14 @@
 ==========Quantumult X==========
 [task_local]
 #京东直播雨
-0,1 19-21 3-5 2 * https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_half_red_rain.js, tag=京东直播雨, enabled=true
+30,31 19-21 3-5 2 * https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_half_red_rain.js, tag=京东直播雨, enabled=true
 =======Loon========
 [Script]
-cron "0,1 19-21 3-5 2 *" script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_half_red_rain.js,tag=京东直播雨
+cron "30,31 19-21 3-5 2 *" script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_half_red_rain.js,tag=京东直播雨
 ========Surge==========
-京东直播雨 = type=cron,cronexp="0,1 19-21 3-5 2 *",wake-system=1,timeout=620,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_half_red_rain.js
+京东直播雨 = type=cron,cronexp="30,31 19-21 3-5 2 *",wake-system=1,timeout=620,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_half_red_rain.js
 =======小火箭=====
-京东直播雨 = type=cron,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_half_red_rain.js, cronexpr="0,1 19-21 3-5 2 *", timeout=200, enable=true
+京东直播雨 = type=cron,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_half_red_rain.js, cronexpr="30,31 19-21 3-5 2 *", timeout=200, enable=true
  */
 const $ = new Env('红包雨');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
@@ -86,7 +86,7 @@ function getRedRainId() {
             'User-Agent': 'JD4iPhone/167538 (iPhone; iOS 14.3; Scale/3.00)',
             'Accept-Language': 'zh-cn',
         },
-        body: `adid=&area=&body=%7B%22liveId%22%3A%223449931%22%7D&build=167538&client=apple&clientVersion=9.3.8&d_brand=apple&d_model=iPhone10%2C3&eid=&isBackground=N&joycious=15&lang=zh_CN&networkType=wifi&networklibtype=JDNetworkBaseAF&openudid=b9b73293715e562295c0f0aac9d15035ea9b4889&osVersion=14.3&partner=apple&rfs=0000&scope=01&screen=1125%2A2436&sign=362e80d59133875c6d51026c5fa68bd0&st=1612324619260&sv=111&uts=&uuid=&wifiBssid=`
+        body: `adid=&area=&body=%7B%22liveId%22%3A%223337663%22%7D&build=167538&client=apple&clientVersion=9.3.8&d_brand=apple&d_model=iPhone10%2C3&eid=&isBackground=N&joycious=15&lang=zh_CN&networkType=wifi&networklibtype=JDNetworkBaseAF&openudid=b9b73293715e562295c0f0aac9d15035ea9b4889&osVersion=14.3&partner=apple&rfs=0000&scope=01&screen=1125%2A2436&sign=3c0df99545e78c9cdda0ce2e285b4a77&st=1612435707016&sv=102&uts=&uuid=&wifiBssid=`
     }
     return new Promise(resolve => {
         $.post(opt, (err, resp, data) => {
