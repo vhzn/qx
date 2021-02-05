@@ -120,7 +120,7 @@ async function getActContent(done = true, authorShareCode = '') {
     $.post(taskPostUrl('dingzhi/change/able/activityContent', `activityId=${ACT_ID}&pin=${encodeURIComponent($.secretPin)}&pinImg=${$.pinImg}&nick=${$.nickName}&cjyxPin=&cjhyPin=&shareUuid=${authorShareCode}`), async (err, resp, data) => {
       try {
         if (err) {
-          console.log(`${err}`);
+          console.log(`${JSON.stringify(err)}`)
         } else {
           data = JSON.parse(data);
           $.cardScore = data.data.cardScore;
@@ -164,7 +164,7 @@ function doTask(function_name, body) {
     $.post(taskPostUrl(function_name, body), (err, resp, data) => {
       try {
         if (err) {
-          console.log(err)
+          console.log(`${JSON.stringify(err)}`)
         } else {
           data = JSON.parse(data);
           if ($.isNode()){
@@ -235,7 +235,7 @@ function getUserInfo() {
     $.post(taskPostUrl('wxActionCommon/getUserInfo', body), async (err, resp, data) => {
       try {
         if (err) {
-          console.log(`${err}`)
+          console.log(`${JSON.stringify(err)}`)
         } else {
           data = JSON.parse(data);
           if (data.data) {
@@ -260,7 +260,7 @@ function getMyPing() {
     $.post(taskPostUrl('customer/getMyPing', `userId=${$.shopId}&token=${$.token}&fromType=APP`), async (err, resp, data) => {
       try {
         if (err) {
-          console.log(`${err}`)
+          console.log(`${JSON.stringify(err)}`)
         } else {
           data = JSON.parse(data);
           if (data.result) {
@@ -281,7 +281,7 @@ function getActInfo() {
     $.post(taskPostUrl('dz/common/getSimpleActInfoVo', `activityId=${ACT_ID}`), async (err, resp, data) => {
       try {
         if (err) {
-          console.log(`${err}`)
+          console.log(`${JSON.stringify(err)}`)
         } else {
           data = JSON.parse(data);
           if (data.result) {
@@ -315,9 +315,10 @@ function grantTokenKey() {
     $.post(opt, (err, resp, data) => {
       try {
         if (err) {
-          console.log(stringify(err));
+          console.log(`${JSON.stringify(err)}`)
         }
         else {
+          console.log(data);
           data = JSON.parse(data);
           if (data.code === '0') {
             $.tokenKey = data.tokenKey;
@@ -351,7 +352,7 @@ function grantToken() {
     $.post(opt, (err, resp, data) => {
       try {
         if (err) {
-          console.log(stringify(err));
+          console.log(`${JSON.stringify(err)}`)
         }
         else {
           data = JSON.parse(data);
@@ -384,7 +385,7 @@ function getActCookie() {
     $.get(opt, (err, resp, data) => {
       try {
         if (err) {
-          console.log(stringify(err));
+          console.log(`${JSON.stringify(err)}`)
         }
         else {
           cookie = `${cookie};`
