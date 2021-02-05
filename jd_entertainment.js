@@ -10,7 +10,8 @@ cron 10 10,11 * * 2-5
 */
 
 const $ = new Env('百变大咖秀');
-const jdCookieNode = $.isNode() ? require('./JDCookies.js') : '';
+const jdCookieNode = require('./jdCookie.js');
+const notify = require('./sendNotify');
 let cookiesArr = [], cookie = '', message = '';
 const ACT_ID = 'dz2102100001340201';
 const questionList = [
@@ -30,15 +31,14 @@ if ($.isNode()) {
   })
   if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => { };
 } else {
-  let cookiesData = $.getdata('CookiesJD') || "[]";
-  cookiesData = JSON.parse(cookiesData);
-  cookiesArr = cookiesData.map(item => item.cookie);
-  cookiesArr.reverse();
-  cookiesArr.push(...[$.getdata('CookieJD2'), $.getdata('CookieJD')]);
-  cookiesArr.reverse();
-  cookiesArr = cookiesArr.filter(item => item !== "" && item !== null && item !== undefined);
+  console.log('本脚本暂时不支持非Node环境运行');
+  $.done();
 }
 !(async () => {
+  if (!$.isNode()) {
+  console.log('本脚本暂时不支持非Node环境运行');
+  $.done();
+}
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', { "open-url": "https://bean.m.jd.com/bean/signIndex.action" });
     return;
