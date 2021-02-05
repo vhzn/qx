@@ -62,7 +62,6 @@ if ($.isNode()) {
   })
 async function entertainment() {
   $.gameScore = 0
-  console.log($.authorShareCode,$.userShareCode)
   await grantTokenKey();
   await grantToken();
   await getActCookie();
@@ -330,7 +329,7 @@ function grantTokenKey() {
           }
         }
       } catch (e) {
-        console.log(e)
+        console.log(e,resp)
       } finally {
         resolve();
       }
