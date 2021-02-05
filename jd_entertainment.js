@@ -1,3 +1,14 @@
+/*
+百变大咖秀
+活动入口：首页搜索-‘百变大咖秀’-底部最右侧按钮
+活动地址：https://lzdz-isv.isvjcloud.com/dingzhi/change/able/activity/3508994?activityId=dz2102100001340201
+这个脚本还没有兼容手机端app，只能在Node环境下运行。
+目前还没有处理好自动领取奖励，需要手动进入活动页面领取奖励。
+脚本还不完善，有bug请见谅。
+cron 10 10,11 * * 2-5
+更新地址：https://github.com/i-chenzhe/qx/blob/main/jd_entertainment.js
+*/
+
 const $ = new Env('百变大咖秀');
 const jdCookieNode = $.isNode() ? require('./JDCookies.js') : '';
 let cookiesArr = [], cookie = '', message = '';
@@ -68,17 +79,13 @@ async function entertainment() {
   await getActInfo();
   await getMyPing();
   await getUserInfo();
-  if ($.authorShareCode === ''|| $.authorShareCode === null || $.authorShareCode === undefined) {
-    await getActContent(false,$.userShareCode);
-  }else{
-    await getActContent(false,$.authorShareCode);
-  }
+  await getActContent(false,$.userShareCode);
   await getActContent();
   await answer();
   // await draw();
   console.log(`好友助力码【 ${$.shareCode} 】`);
   await submitShareCode({ 'share_code': $.shareCode, 'pt_key': $.UserName });
-  $.msg($.name, `运行完成`, `京东账号${$.index} ${$.nickName || $.UserName}\n请手动打开领取奖品\n`, { "open-url": "https://lzdz-isv.isvjcloud.com/dingzhi/change/able/activity/3508994?activityId=dz2102100001340201" });
+  await notify.sendNotify(`${$.name}运行完成`, `京东账号${$.index} ${$.nickName || $.UserName}\n请手动打开领取奖品\nhttps://lzdz-isv.isvjcloud.com/dingzhi/change/able/activity/3508994?activityId=dz2102100001340201\n`);
 }
 function draw() {
   $.cardList.filter(async item => {
@@ -318,8 +325,8 @@ function grantTokenKey() {
           console.log(`${JSON.stringify(err)}`)
         }
         else {
-          console.log(data);
           data = JSON.parse(data);
+
           if (data.code === '0') {
             $.tokenKey = data.tokenKey;
             cookie = `${cookie}IsvToken=${$.tokenKey}`
