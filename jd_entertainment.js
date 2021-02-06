@@ -23,7 +23,7 @@ cron "10 10,11 * * 2-5" script-path=https://raw.githubusercontent.com/i-chenzhe/
 const $ = new Env('百变大咖秀');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
-let cookiesArr = [], cookie = '', message = '';
+let cookiesArr = [], cookie = '', originCookie = '', message = '';
 const ACT_ID = 'dz2102100001340201';
 const questionList = [
   { q: '3ffb5990fc294b9f9c6fa9256270d5f6', a: 'B:王祖蓝' },
@@ -60,6 +60,7 @@ if ($.isNode()) {
       await getAuthorCode('entertainment');
       await getShareCode();
       cookie = cookiesArr[i]
+      originCookie = cookiesArr[i]
       $.UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1])
       $.index = i + 1;
       $.isLogin = true;
@@ -200,11 +201,8 @@ function doTask(function_name, body) {
           console.log(`${JSON.stringify(err)}`)
         } else {
           data = JSON.parse(data);
-          if ($.isNode()){
-              lz_token_value = resp['headers']['set-cookie'][1].split(';')[0];
-              a =  cookie.split(";").splice(0,5)
-              a.push(lz_token_value);
-              cookie = a.join(';');
+          if (resp['headers']['set-cookie']) {
+            cookie = `${resp['headers']['set-cookie'].join(';')}; ${originCookie}`;
           }
           if (data.result === true) {
             if (data.data.hasOwnProperty('gameScore')) {
