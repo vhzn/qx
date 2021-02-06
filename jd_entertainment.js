@@ -2,11 +2,21 @@
 百变大咖秀
 活动入口：首页搜索-‘百变大咖秀’-底部最右侧按钮
 活动地址：https://lzdz-isv.isvjcloud.com/dingzhi/change/able/activity/3508994?activityId=dz2102100001340201
-这个脚本还没有兼容手机端app，只能在Node环境下运行。
-目前还没有处理好自动领取奖励，需要手动进入活动页面领取奖励。
-脚本还不完善，有bug请见谅。
-cron 10 10,11 * * 2-5
+
+新手写脚本，难免有bug，能用且用。
+
 更新地址：https://github.com/i-chenzhe/qx/blob/main/jd_entertainment.js
+============Quantumultx===============
+[task_local]
+#百变大咖秀
+10 10,11 * * 2-5 https://github.com/i-chenzhe/qx/blob/main/jd_entertainment.js, tag=百变大咖秀,  enabled=true
+================Loon==============
+[Script]
+cron "10 10,11 * * 2-5" script-path=https://github.com/i-chenzhe/qx/blob/main/jd_entertainment.js,tag=百变大咖秀
+===============Surge=================
+百变大咖秀 = type=cron,cronexp="10 10,11 * * 2-5",wake-system=1,timeout=3600,script-path=https://github.com/i-chenzhe/qx/blob/main/jd_entertainment.js
+============小火箭=========
+百变大咖秀 = type=cron,script-path=https://github.com/i-chenzhe/qx/blob/main/jd_entertainment.js, cronexpr="10 10,11 * * 2-5", timeout=3600, enable=true
 */
 
 const $ = new Env('百变大咖秀');
