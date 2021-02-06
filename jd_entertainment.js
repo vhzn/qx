@@ -75,23 +75,23 @@ if ($.isNode()) {
 async function entertainment() {
   $.gameScore = 0;
   await grantTokenKey();
-  await $.wait(1000)
+  await $.wait(1500)
   await grantToken();
-  await $.wait(1000)
+  await $.wait(1500)
   await getActCookie();
-  await $.wait(1000)
+  await $.wait(1500)
   await getActInfo();
-  await $.wait(1000)
+  await $.wait(1500)
   await getMyPing();
-  await $.wait(1000)
+  await $.wait(1500)
   await getUserInfo();
-  await $.wait(1000)
+  await $.wait(1500)
   await getActContent(false,$.userShareCode);
-  await $.wait(1000)
+  await $.wait(1500)
   await getActContent();
-  await $.wait(1000)
+  await $.wait(1500)
   await answer();
-  await $.wait(1000)
+  await $.wait(1500)
   await draw();
   console.log(`好友助力码【 ${$.shareCode} 】`);
   console.log(message);
@@ -131,7 +131,7 @@ async function answer() {
     })
     let body = `activityId=${ACT_ID}&actorUuid=${$.shareCode}&pin=${encodeURIComponent($.secretPin)}&uuid=${newCardList[i].uuid}&answer=${encodeURIComponent(options)}&position=${newPosition[i]}`
     await doTask('dingzhi/change/able/answer', body);
-    await $.wait(1000)
+    await $.wait(1500)
   }
 }
 async function getActContent(done = true, authorShareCode = '') {
@@ -164,9 +164,9 @@ async function getActContent(done = true, authorShareCode = '') {
                   await $.wait(2000)
                 }
               }
-              await $.wait(1000)
+              await $.wait(1500)
             }
-            await $.wait(1000)
+            await $.wait(1500)
             await doTask('dingzhi/change/able/saveTask', `activityId=${ACT_ID}&actorUuid=${$.shareCode}&pin=${encodeURIComponent($.secretPin)}&taskType=${$.addSku.settings[0].type}&taskValue=${$.addSku.settings[0].value}`)
           }
         }
