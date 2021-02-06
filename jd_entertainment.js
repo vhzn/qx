@@ -10,8 +10,8 @@ cron 10 10,11 * * 2-5
 */
 
 const $ = new Env('百变大咖秀');
-const jdCookieNode = require('./jdCookie.js');
-const notify = require('./sendNotify');
+const notify = $.isNode() ? require('./sendNotify') : '';
+const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let cookiesArr = [], cookie = '', message = '';
 const ACT_ID = 'dz2102100001340201';
 const questionList = [
@@ -31,14 +31,16 @@ if ($.isNode()) {
   })
   if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => { };
 } else {
-  console.log('本脚本暂时不支持非Node环境运行');
-  $.done();
+  let cookiesData = $.getdata('CookiesJD') || "[]";
+  cookiesData = jsonParse(cookiesData);
+  cookiesArr = cookiesData.map(item => item.cookie);
+  cookiesArr.reverse();
+  cookiesArr.push(...[$.getdata('CookieJD2'), $.getdata('CookieJD')]);
+  cookiesArr.reverse();
+  cookiesArr = cookiesArr.filter(item => item !== "" && item !== null && item !== undefined);
 }
 !(async () => {
-  if (!$.isNode()) {
-  console.log('本脚本暂时不支持非Node环境运行');
-  $.done();
-}
+
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', { "open-url": "https://bean.m.jd.com/bean/signIndex.action" });
     return;
@@ -79,10 +81,10 @@ async function entertainment() {
   await getActInfo();
   await getMyPing();
   await getUserInfo();
-  await getActContent(false,$.userShareCode);
+  await getActContent(false, $.userShareCode);
   await getActContent();
   await answer();
-  // await draw();
+  await draw();
   console.log(`好友助力码【 ${$.shareCode} 】`);
   await submitShareCode({ 'share_code': $.shareCode, 'pt_key': $.UserName });
   await notify.sendNotify(`${$.name}运行完成`, `京东账号${$.index} ${$.nickName || $.UserName}\n请手动打开领取奖品\nhttps://lzdz-isv.isvjcloud.com/dingzhi/change/able/activity/3508994?activityId=dz2102100001340201\n`);
@@ -90,7 +92,7 @@ async function entertainment() {
 function draw() {
   $.cardList.filter(async item => {
     if (item.answer === true && item.draw === false) {
-      await doTask('dingzhi/change/able/startDraw',`activityId=${ACT_ID}&actorUuid=${$.shareCode}&pin=${encodeURIComponent($.secretPin)}&cardId=${item.uuid}`)
+      await doTask('dingzhi/change/able/startDraw', `activityId=${ACT_ID}&actorUuid=${$.shareCode}&pin=${encodeURIComponent($.secretPin)}&cardId=${item.uuid}`)
       await $.wait(3000)
     }
   })
@@ -135,12 +137,13 @@ async function getActContent(done = true, authorShareCode = '') {
           $.addSku = data.data.addSku;
           $.mainActive = data.data.mainActive;
           $.toShop = data.data.toShop;
+          await doTask('dingzhi/taskact/common/drawContent', `activityId=${ACT_ID}&pin=${encodeURIComponent($.secretPin)}`);
           if (done) {
             for (let i of ['toShop', 'mainActive']) {
               let task = data.data[i];
               for (let vo of task.settings) {
                 let body1 = `activityId=${ACT_ID}&actorUuid=${$.shareCode}&pin=${encodeURIComponent($.secretPin)}&taskType=${vo.type}&taskValue=${vo.value}`;
-                let body2 = `venderId=${data.data.shopId}&elementId=${encodeURIComponent('店铺'+vo.value)}&pageId=${ACT_ID}&pin=${encodeURIComponent($.secretPin)}`;
+                let body2 = `venderId=${data.data.shopId}&elementId=${encodeURIComponent('店铺' + vo.value)}&pageId=${ACT_ID}&pin=${encodeURIComponent($.secretPin)}`;
                 if (vo.type === 12) {
                   console.log(`浏览会场 - ${vo.name}`)
                   await doTask('dingzhi/change/able/saveTask', body1);
@@ -173,35 +176,37 @@ function doTask(function_name, body) {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
         } else {
-          data = JSON.parse(data);
-          if ($.isNode()){
+          if (safeGet(data)) {
+            data = JSON.parse(data);
+            if ($.isNode()) {
               lz_token_value = resp['headers']['set-cookie'][1].split(';')[0];
-              a =  cookie.split(";").splice(0,5)
+              a = cookie.split(";").splice(0, 5)
               a.push(lz_token_value);
               cookie = a.join(';');
-          }
-          if (data.result === true) {
-            if (data.data.hasOwnProperty('gameScore')) {
-              $.gameScore += data.data.gameScore;
-              if (data.data.gameScore !== 0) {
-                console.log(`获得1次翻牌机会`);
+            }
+            if (data.result === true) {
+              if (data.data.hasOwnProperty('gameScore')) {
+                $.gameScore += data.data.gameScore;
+                if (data.data.gameScore !== 0) {
+                  console.log(`获得1次翻牌机会`);
+                }
               }
-            }
-            if (data.data.hasOwnProperty('list')) {
-              $.cardList = data.data.list;
-            }
-            if (data.data.hasOwnProperty('right')) {
-              if (data.data.right === true) {
-                console.log(`回答正确。`)
+              if (data.data.hasOwnProperty('list')) {
+                $.cardList = data.data.list;
               }
+              if (data.data.hasOwnProperty('right')) {
+                if (data.data.right === true) {
+                  console.log(`回答正确。`)
+                }
+              }
+              if (data.data.hasOwnProperty('drawInfo') && data.data.drawInfo !== null) {
+                console.log(`获得${data.data.drawInfo.name}`)
+                message += `获得${data.data.drawInfo.name}\n`
+                console.log(data.data.drawInfo);
+              }
+            } else {
+              console.log(data.errorMessage)
             }
-            if (data.data.hasOwnProperty('drawInfo') && data.data.drawInfo !== null) {
-              console.log(`获得${data.data.drawInfo.name}`)
-              message += `获得${data.data.drawInfo.name}\n`
-              console.log(data.data.drawInfo);
-            }
-          } else {
-            console.log(data.errorMessage)
           }
         }
       } catch (e) {
@@ -214,26 +219,26 @@ function doTask(function_name, body) {
 }
 function getAuthorCode(type) {
   return new Promise(async resolve => {
-      $.get({ url: `https://api.r2ray.com/jd.shareCode/author?type=${type}` }, (err, resp, data) => {
-          try {
-              if (err) {
-                  console.log(`${JSON.stringify(err)}`)
-              } else {
-                  if (data) {
-                      data = JSON.parse(data);
-                      if (data.data.length > 0 ) {
-                        $.authorShareCode = data.data[0].share_code
-                      }else{
-                        $.authorShareCode = '';
-                      }
-                  }
-              }
-          } catch (e) {
-              $.logErr(e, resp)
-          } finally {
-              resolve(data);
+    $.get({ url: `https://api.r2ray.com/jd.shareCode/author?type=${type}` }, (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+        } else {
+          if (data) {
+            data = JSON.parse(data);
+            if (data.data.length > 0) {
+              $.authorShareCode = data.data[0].share_code
+            } else {
+              $.authorShareCode = '';
+            }
           }
-      })
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve(data);
+      }
+    })
   })
 }
 function getUserInfo() {
@@ -333,7 +338,7 @@ function grantTokenKey() {
           }
         }
       } catch (e) {
-        console.log(e,resp)
+        console.log(e, resp)
       } finally {
         resolve();
       }
@@ -435,52 +440,52 @@ function taskPostUrl(function_id, body) {
 }
 function getShareCode() {
   return new Promise(async resolve => {
-      $.get({ url: `https://api.r2ray.com/jd.entertainment/index` }, (err, resp, data) => {
-          try {
-              if (err) {
-                  console.log(`${JSON.stringify(err)}`)
-              } else {
-                  if (data) {
-                    data = JSON.parse(data)
-                    if (data.data.length > 0 ) {
-                      $.userShareCode = data.data[0].share_code
-                    }else{
-                      $.userShareCode = '';
-                    }
-                  }
-              }
-          } catch (e) {
-              $.logErr(e, resp)
-          } finally {
-              resolve(data);
+    $.get({ url: `https://api.r2ray.com/jd.entertainment/index` }, (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+        } else {
+          if (data) {
+            data = JSON.parse(data)
+            if (data.data.length > 0) {
+              $.userShareCode = data.data[0].share_code
+            } else {
+              $.userShareCode = '';
+            }
           }
-      })
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve(data);
+      }
+    })
   })
 }
 function submitShareCode(body) {
   let opt = {
-      'url': `https://api.r2ray.com/jd.entertainment/update`,
-      'headers': {
-          "Content-Type": "application/json",
-      },
-      'body': JSON.stringify(body)
+    'url': `https://api.r2ray.com/jd.entertainment/update`,
+    'headers': {
+      "Content-Type": "application/json",
+    },
+    'body': JSON.stringify(body)
   }
   return new Promise(async resolve => {
-      $.post(opt, (err, resp, data) => {
-          try {
-              if (err) {
-                  console.log(`${JSON.stringify(err)}`)
-                  console.log(`${$.name} API请求失败，请检查网路重试`)
-              } else {
-                  data = JSON.parse(data);
-                  console.log(data.msg)
-              }
-          } catch (e) {
-              $.logErr(e, resp)
-          } finally {
-              resolve(data);
-          }
-      })
+    $.post(opt, (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          data = JSON.parse(data);
+          console.log(data.msg)
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve(data);
+      }
+    })
   })
 }
 function TotalBean() {
