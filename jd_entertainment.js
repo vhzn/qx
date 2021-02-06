@@ -82,7 +82,7 @@ async function entertainment() {
   await getActContent(false,$.userShareCode);
   await getActContent();
   await answer();
-  // await draw();
+  await draw();
   console.log(`好友助力码【 ${$.shareCode} 】`);
   await submitShareCode({ 'share_code': $.shareCode, 'pt_key': $.UserName });
   await notify.sendNotify(`${$.name}运行完成`, `京东账号${$.index} ${$.nickName || $.UserName}\n请手动打开领取奖品\nhttps://lzdz-isv.isvjcloud.com/dingzhi/change/able/activity/3508994?activityId=dz2102100001340201\n`);
@@ -108,7 +108,7 @@ async function answer() {
       newPosition.splice(key, 1)
     }
   })
-  for (let i = 0; i < $.gameScore; i++) {
+  for (let i = 0; i <= $.gameScore; i++) {
     let options = newCardList[i].optionB;
     questionList.filter((value) => {
       if (value.q === newCardList[i].uuid) {
