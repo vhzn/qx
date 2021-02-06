@@ -94,6 +94,7 @@ async function entertainment() {
   await $.wait(1000)
   await draw();
   console.log(`好友助力码【 ${$.shareCode} 】`);
+  console.log(message);
   await submitShareCode({ 'share_code': $.shareCode, 'pt_key': $.UserName });
   await notify.sendNotify(`${$.name}运行完成`, `京东账号${$.index} ${$.nickName || $.UserName}\n请手动打开领取奖品\nhttps://lzdz-isv.isvjcloud.com/dingzhi/change/able/activity/3508994?activityId=dz2102100001340201\n`);
 }
@@ -207,9 +208,8 @@ function doTask(function_name, body) {
               }
             }
             if (data.data.hasOwnProperty('drawInfo') && data.data.drawInfo !== null) {
-              console.log(`获得${data.data.drawInfo.name}`)
               message += `获得${data.data.drawInfo.name}\n`
-              console.log(data.data.drawInfo);
+              console.log(`获得${data.data.drawInfo.name}\n`);
             }
           } else {
             console.log(data.errorMessage)
@@ -413,7 +413,7 @@ function getActCookie() {
             }
           else {
             for (let ck of resp['headers']['Set-Cookie'].split(',')) {
-              cookie = `${cookie}${sk.split(";")[0]};`
+              cookie = `${cookie}${ck.split(";")[0]};`
             }
           }
         }
