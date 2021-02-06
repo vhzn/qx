@@ -73,7 +73,7 @@ if ($.isNode()) {
     $.done();
   })
 async function entertainment() {
-  $.gameScore = 0
+  $.gameScore = 0;
   await grantTokenKey();
   await $.wait(1000)
   await grantToken();
@@ -96,13 +96,14 @@ async function entertainment() {
   console.log(`好友助力码【 ${$.shareCode} 】`);
   console.log(message);
   await submitShareCode({ 'share_code': $.shareCode, 'pt_key': $.UserName });
+  if ($.isNode()) {
   await notify.sendNotify(`${$.name}运行完成`, `京东账号${$.index} ${$.nickName || $.UserName}\n请手动打开领取奖品\nhttps://lzdz-isv.isvjcloud.com/dingzhi/change/able/activity/3508994?activityId=dz2102100001340201\n`);
+  }
 }
 function draw() {
-  $.cardList.filter(async item => {
+  $.cardList.filter( async item => {
     if (item.answer === true && item.draw === false) {
       await doTask('dingzhi/change/able/startDraw',`activityId=${ACT_ID}&actorUuid=${$.shareCode}&pin=${encodeURIComponent($.secretPin)}&cardId=${item.uuid}`)
-      await $.wait(3000)
     }
   })
 }
@@ -146,7 +147,6 @@ async function getActContent(done = true, authorShareCode = '') {
           $.addSku = data.data.addSku;
           $.mainActive = data.data.mainActive;
           $.toShop = data.data.toShop;
-          await doTask('dingzhi/taskact/common/drawContent', `activityId=${ACT_ID}&pin=${encodeURIComponent($.secretPin)}`);
           if (done) {
             for (let i of ['toShop', 'mainActive']) {
               let task = data.data[i];
@@ -207,6 +207,9 @@ function doTask(function_name, body) {
                 console.log(`回答正确。`)
               }
             }
+            // if (data.data.hasOwnProperty('drawInfo') && data.data.drawInfo === null) {
+            //   $.firstRun = true;
+            // }
             if (data.data.hasOwnProperty('drawInfo') && data.data.drawInfo !== null) {
               message += `获得${data.data.drawInfo.name}\n`
               console.log(`获得${data.data.drawInfo.name}\n`);
