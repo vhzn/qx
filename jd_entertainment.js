@@ -4,6 +4,7 @@
 活动地址：https://lzdz-isv.isvjcloud.com/dingzhi/change/able/activity/3508994?activityId=dz2102100001340201
 
 新手写脚本，难免有bug，能用且用。
+多谢 whyour 大佬 指导
 
 更新地址：https://github.com/i-chenzhe/qx/blob/main/jd_entertainment.js
 ============Quantumultx===============
