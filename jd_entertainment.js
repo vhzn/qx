@@ -48,7 +48,7 @@ if ($.isNode()) {
   cookiesArr.reverse();
   cookiesArr.push(...[$.getdata('CookieJD2'), $.getdata('CookieJD')]);
   cookiesArr.reverse();
-  cookiesArr = cookiesArr.filter(item => item !== "" && item !== null && item !== undefined);
+  cookiesArr = cookiesArr.filter(item => !!item);
 }
 !(async () => {
   if (!cookiesArr[0]) {
@@ -111,18 +111,22 @@ async function entertainment() {
   await notify.sendNotify(`${$.name}运行完成`, `京东账号${$.index} ${$.nickName || $.UserName}\n请手动打开领取奖品\nhttps://lzdz-isv.isvjcloud.com/dingzhi/change/able/activity/3508994?activityId=dz2102100001340201\n`);
   }
 }
-function draw() {
-  $.cardList.filter( async item => {
-    if (item.answer === true && item.draw === false) {
-      await doTask('dingzhi/change/able/startDraw',`activityId=${ACT_ID}&actorUuid=${$.shareCode}&pin=${encodeURIComponent($.secretPin)}&cardId=${item.uuid}`)
+
+async function draw() {
+  for (let i = 0; i < $.cardList.length; i++) {
+    const card = $.cardList[i];
+    if (card.answer === true && card.draw === false) {
+      await doTask('dingzhi/change/able/startDraw',`activityId=${ACT_ID}&actorUuid=${$.shareCode}&pin=${encodeURIComponent($.secretPin)}&cardId=${card.uuid}`)
     }
-  })
+  }
 }
+
 async function answer() {
   await doTask('dingzhi/change/able/getHasCard', `activityId=${ACT_ID}&actorUuid=${$.shareCode}&pin=${encodeURIComponent($.secretPin)}`);
   let newPosition = [0, 1, 2, 3, 4, 5, 6, 7, 8]
   let newCardList = [];
-  $.cardList.filter(function (v) {
+  for (let i = 0; i < $.cardList.length; i++) {
+    const v = $.cardList[i];
     if (v.position === 99) {
       newCardList.push(v)
     }
@@ -130,21 +134,20 @@ async function answer() {
       let key = newPosition.indexOf(v.position);
       newPosition.splice(key, 1)
     }
-  })
+  }
   for (let i = 0; i <= $.gameScore; i++) {
     let options = newCardList[i].optionB;
-    questionList.filter((value) => {
-      if (value.q === newCardList[i].uuid) {
-        console.log(`在本地题库中找到了答案：${value.a}`)
-        options = value.a
-        return;
-      }
-    })
+    const tmp = questionList.filter((x) => x.q === newCardList[i].uuid);
+    if (tmp && tmp[0]) {
+      console.log(`在本地题库中找到了答案：${tmp[0].a}`)
+      options = tmp[0].a
+    }
     let body = `activityId=${ACT_ID}&actorUuid=${$.shareCode}&pin=${encodeURIComponent($.secretPin)}&uuid=${newCardList[i].uuid}&answer=${encodeURIComponent(options)}&position=${newPosition[i]}`
     await doTask('dingzhi/change/able/answer', body);
     await $.wait(1500)
   }
 }
+
 async function getActContent(done = true, authorShareCode = '') {
   return new Promise(resolve => {
     $.post(taskPostUrl('dingzhi/change/able/activityContent', `activityId=${ACT_ID}&pin=${encodeURIComponent($.secretPin)}&pinImg=${$.pinImg}&nick=${$.nickName}&cjyxPin=&cjhyPin=&shareUuid=${authorShareCode}`), async (err, resp, data) => {
