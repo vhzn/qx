@@ -296,7 +296,7 @@ function shareCodesFormat() {
         let resShareCode = [];
         if (readShareCodeRes && readShareCodeRes.code === 200) {
             for (let i = 0; i < readShareCodeRes.data.length; i++) {
-                resShareCode.push(readShareCodeRes.data[i].shareCode);
+                resShareCode.push(readShareCodeRes.data[i].share_code);
             }
             $.newShareCodes = [...new Set([...$.newShareCodes, ...(resShareCode || [])])];
         }
