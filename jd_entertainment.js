@@ -154,7 +154,6 @@ async function answer() {
     await $.wait(1500)
   }
 }
-
 async function getActContent(done = true, authorShareCode = '') {
   return new Promise(resolve => {
     $.post(taskPostUrl('dingzhi/change/able/activityContent', `activityId=${ACT_ID}&pin=${encodeURIComponent($.secretPin)}&pinImg=${$.pinImg}&nick=${$.nickName}&cjyxPin=&cjhyPin=&shareUuid=${authorShareCode}`), async (err, resp, data) => {
