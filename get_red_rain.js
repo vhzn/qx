@@ -3,13 +3,12 @@ const body = $request.body;
 !(async () => {
     await getRedRainId();
     if ($.activityId) {
-        if ((new Date()).getHours() === 9 || (new Date()).getHours() === 20) {
             if (body.indexOf('liveId') !== -1) {
                 await findLiveId(body.split('&'));
                 await updataBody({ "bodyStr": body, "liveID": $.liveId });
             }
         }
-    }
+
 })()
     .catch((e) => {
         $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
