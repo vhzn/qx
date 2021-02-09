@@ -65,7 +65,8 @@ if ($.isNode()) {
                 $.msg('打开链接,找到一个带有红包雨图样的直播间进入', '以获取红包雨参数', `openapp.jdmobile://virtual?params=%7B%22liveOrigin%22%3A%220%22%2C%22des%22%3A%22LivePlayerRoom%22%2C%22sourceType%22%3A%22sourceValue_test%22%2C%22id%22%3A%22%22%2C%22sourceValue%22%3A%22sourceValue_test%22%2C%22category%22%3A%22jump%22%7D`)
                 }
             }
-            if ((new Date()).getMinutes() === 0 && (new Date()).getMinutes() === 1) {
+
+            if ((new Date()).getMinutes() === 0 || (new Date()).getMinutes() === 1) {
                 await getRedRainBody();
                 await getRedRainId();
                 if ($.activityId) {
@@ -184,7 +185,7 @@ function getRedRainBody() {
                     console.log(`${JSON.stringify(err)}`)
                 } else {
                     data = JSON.parse(data)
-                    $.body = data.body;
+                    $.body = data.data.bodyStr;
                 }
             } catch (error) {
                 $.logErr(e, resp)
