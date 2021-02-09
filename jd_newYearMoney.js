@@ -5,6 +5,7 @@
 
 
 脚本内置了一个给作者任务助力的网络请求，默认开启，如介意请自行关闭。
+助力活动链接： https://h5.m.jd.com/babelDiy/Zeus/4ZK4ZpvoSreRB92RRo8bpJAQNoTq/index.html
 参数 helpAuthor = false
 
 
