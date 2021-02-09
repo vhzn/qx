@@ -1,23 +1,17 @@
-
 /*
 直播红包雨
-
 参考shylocks大佬的脚本改的
-
 每天两次进入京东获取红包雨参数，
 点击通知里的链接进入后找到一个有红包雨标识的直播间进去，
 等待通知提示获取参数成功即可。
-
 脚本更新地址：https://raw.githubusercontent.com/i-chenzhe/qx/main/red_rain.js
 脚本兼容: Quantumult X
 ==========Quantumult X==========
 [task_local]
 #京东直播雨
 0,50 0,9,11,13,15,17,19,20,21,23 8-18 2 * https://raw.githubusercontent.com/i-chenzhe/qx/main/red_rain.js, tag=京东直播雨, enabled=true
-
 [rewrite_local]
 ^https://api\.m\.jd\.com/client\.action\?functionId\=liveActivityV842 url script-request-body https://raw.githubusercontent.com/i-chenzhe/qx/main/get_red_rain.js
-
  */
 const $ = new Env('红包雨');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
@@ -59,6 +53,11 @@ if ($.isNode()) {
                 }
                 continue
             }
+            if ((new Date()).getHours() === 9 || (new Date()).getHours() === 20) {
+                if ((new Date()).getMinutes() !== 0 && (new Date()).getMinutes() !== 1) {
+                $.msg('打开链接,找到一个带有红包雨图样的直播间进入', '以获取红包雨参数', `openapp.jdmobile://virtual?params=%7B%22liveOrigin%22%3A%220%22%2C%22des%22%3A%22LivePlayerRoom%22%2C%22sourceType%22%3A%22sourceValue_test%22%2C%22id%22%3A%22%22%2C%22sourceValue%22%3A%22sourceValue_test%22%2C%22category%22%3A%22jump%22%7D`)
+                }
+            }
             if ((new Date()).getMinutes() === 0 && (new Date()).getMinutes() === 1) {
                 await getRedRainBody();
                 await getRedRainId();
@@ -71,13 +70,6 @@ if ($.isNode()) {
                     }
                 }
             }
-            if ((new Date()).getHours() === 9 || (new Date()).getHours() === 20) {
-                if ((new Date()).getMinutes() !== 0 && (new Date()).getMinutes() !== 1) {
-                $.msg('打开链接,找到一个带有红包雨图样的直播间进入', '以获取红包雨参数', `openapp.jdmobile://virtual?params=%7B%22liveOrigin%22%3A%220%22%2C%22des%22%3A%22LivePlayerRoom%22%2C%22sourceType%22%3A%22sourceValue_test%22%2C%22id%22%3A%22%22%2C%22sourceValue%22%3A%22sourceValue_test%22%2C%22category%22%3A%22jump%22%7D`)
-                }
-            }
-            
-
         }
     }
 })()
@@ -190,7 +182,6 @@ function getRedRainBody() {
         })
     })
 }
-
 function TotalBean() {
     return new Promise(async resolve => {
         const options = {
