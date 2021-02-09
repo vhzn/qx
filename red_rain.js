@@ -79,6 +79,8 @@ if ($.isNode()) {
                         console.log(`还没有到活动时间\n下一场红包雨开始时间：${new Date($.st).toLocaleString()}`)
                     }
                 }
+            }else{
+                console.log(`还没有到活动时间`)
             }
         }
     }
