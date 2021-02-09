@@ -1,10 +1,13 @@
 const $ = new Env('获取红包雨参数');
 const body = $request.body;
 !(async () => {
-    if ((new Date()).getHours() === 9 || (new Date()).getHours() === 20) {
-        if (body.indexOf('liveId') !== -1) {
-            await findLiveId(body.split('&'));
-            await updataBody({ "bodyStr": body, "liveID": $.liveId });
+    await getRedRainId();
+    if ($.activityId) {
+        if ((new Date()).getHours() === 9 || (new Date()).getHours() === 20) {
+            if (body.indexOf('liveId') !== -1) {
+                await findLiveId(body.split('&'));
+                await updataBody({ "bodyStr": body, "liveID": $.liveId });
+            }
         }
     }
 })()
@@ -20,6 +23,47 @@ function findLiveId(p) {
         if (v.indexOf('body') !== -1) {
             $.liveId = JSON.parse(unescape(p[i].split('=')[1])).liveId;
         }
+    })
+}
+
+function getRedRainId() {
+    let opt = {
+        url: `https://api.m.jd.com/client.action?functionId=liveActivityV842`,
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Connection': 'keep-alive',
+            'Cookie': cookie,
+            'Accept': 'application/json, text/plain, */*',
+            'User-Agent': 'JD4iPhone/167538 (iPhone; iOS 14.3; Scale/3.00)',
+            'Accept-Language': 'zh-cn',
+        },
+        body: body
+    }
+    return new Promise(resolve => {
+        $.post(opt, (err, resp, data) => {
+            try {
+                if (err) {
+                    console.log(stringify(err))
+                } else {
+                    data = JSON.parse(data)
+                    if (data.data && data.data.iconArea)
+                        act = data.data.iconArea.filter(vo => vo['type'] === "platform_red_packege_rain")[0]
+                    if (act) {
+                        let url = act.data.activityUrl
+                        $.activityId = url.substr(url.indexOf("id=") + 3)
+                        $.st = act.startTime
+                        $.ed = act.endTime
+                    } else {
+                        console.log(`暂无红包雨`)
+                    }
+                }
+            } catch (e) {
+                console.log(e, resp)
+            } finally {
+                resolve()
+            }
+        })
     })
 }
 
