@@ -1,9 +1,11 @@
 const $ = new Env('获取红包雨参数');
 const body = $request.body;
 !(async () => {
-    if (body.indexOf('liveId') !== -1) {
-        await findLiveId(body.split('&'));
-        await updataBody({"bodyStr": body,"liveID":$.liveId});
+    if ((new Date()).getHours() === 9 || (new Date()).getHours() === 20) {
+        if (body.indexOf('liveId') !== -1) {
+            await findLiveId(body.split('&'));
+            await updataBody({ "bodyStr": body, "liveID": $.liveId });
+        }
     }
 })()
     .catch((e) => {
