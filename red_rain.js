@@ -3,7 +3,9 @@
 参考shylocks大佬的脚本改的
 
 脚本内置了一个给作者任务助力的网络请求，默认开启，如介意请自行关闭。
+助力活动链接： https://h5.m.jd.com/babelDiy/Zeus/4ZK4ZpvoSreRB92RRo8bpJAQNoTq/index.html
 参数 helpAuthor = false
+
 
 每天两次进入京东获取红包雨参数，
 点击通知里的链接进入后找到一个有红包雨标识的直播间进去，
@@ -20,7 +22,7 @@
 const $ = new Env('红包雨');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let cookiesArr = [], cookie = '', message;
-let helpAuthor = true;//为作者助力
+let helpAuthor = true;//为作者助力的开关
 if ($.isNode()) {
     Object.keys(jdCookieNode).forEach((item) => {
         cookiesArr.push(jdCookieNode[item])

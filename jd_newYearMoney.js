@@ -26,7 +26,7 @@ const $ = new Env('新年压岁钱');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '';
-let helpAuthor = true;//为作者助力
+let helpAuthor = true;//为作者助力的开关
 const randomCount = $.isNode() ? 2 : 2;
 const inviteCodes = [];
 if ($.isNode()) {
