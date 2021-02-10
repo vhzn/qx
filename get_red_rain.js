@@ -1,7 +1,6 @@
 const $ = new Env('获取红包雨参数');
 const body = $response.body;
 !(async () => {
-    console.log(body);
     data = JSON.parse(body)
     if (data.data && data.data.iconArea)
         act = data.data.iconArea.filter(vo => vo['type'] === "platform_red_packege_rain")[0]
