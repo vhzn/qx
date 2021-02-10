@@ -1,12 +1,19 @@
 const $ = new Env('获取红包雨参数');
-const body = $request.body;
+const body = $response.body;
 !(async () => {
-            if (body.indexOf('liveId') !== -1) {
-                await findLiveId(body.split('&'));
-                await updataBody({ "bodyStr": body, "liveID": $.liveId });
-            }
-        
-
+    data = JSON.parse(body)
+    if (data.data && data.data.iconArea)
+        act = data.data.iconArea.filter(vo => vo['type'] === "platform_red_packege_rain")[0]
+    if (act) {
+        let url = act.data.activityUrl
+        $.activityId = url.substr(url.indexOf("id=") + 3)
+        $.st = act.startTime
+        $.ed = act.endTime
+        await updataBody({'actID':$.activityId,'st':$.st,'et':$.ed})
+    } else {
+        $.msg('这个直播间没有找到红包雨','请换个直播间尝试。')
+        console.log(`暂无红包雨`)
+    }
 })()
     .catch((e) => {
         $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
@@ -14,16 +21,6 @@ const body = $request.body;
     .finally(() => {
         $.done();
     })
-
-function findLiveId(p) {
-    p.filter((v, i) => {
-        if (v.indexOf('body') !== -1) {
-            $.liveId = JSON.parse(unescape(p[i].split('=')[1])).liveId;
-        }
-    })
-}
-
-
 function updataBody(body) {
     let opt = {
         'url': 'https://api.r2ray.com/jd.redRain/updataBody',
