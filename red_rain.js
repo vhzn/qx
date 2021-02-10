@@ -144,9 +144,13 @@ function getRedRainBody() {
                     console.log(`${JSON.stringify(err)}`)
                 } else {
                     data = JSON.parse(data)
-                    $.activityId = data.data.actID
+                    if (data.data) {
+                        $.activityId = data.data.actID
                     $.st = data.data.st
                     $.ed = data.data.et
+                    }else{
+                        console.log('没有找到参数')
+                    }
                 }
             } catch (error) {
                 $.logErr(e, resp)
