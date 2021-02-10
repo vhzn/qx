@@ -110,10 +110,10 @@ function receiveRedRain(body) {
                             console.log(`领取成功，获得${JSON.stringify(data.lotteryResult)}`)
                             message += `领取成功，获得 ${(data.lotteryResult.jPeasList[0].quantity)}京豆`
                         } else if (data.subCode === '8') {
-                            console.log(`今日次数已满`)
+                            console.log(`领取失败，本场已领过`)
                             message += `领取失败，本场已领过`;
                         } else {
-                            console.log(`异常：${data.msg}`)
+                            console.log(`${data.msg}`)
                         }
                     }
                 }
@@ -133,7 +133,6 @@ function getRedRainBody() {
                     console.log(`${JSON.stringify(err)}`)
                 } else {
                     data = JSON.parse(data)
-                    console.log(data)
                     if (data.data) {
                         $.activityId = data.data.actID
                         $.st = data.data.st
