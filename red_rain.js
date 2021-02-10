@@ -146,8 +146,8 @@ function getRedRainBody() {
                     data = JSON.parse(data)
                     if (data.data) {
                         $.activityId = data.data.actID
-                    $.st = data.data.st
-                    $.ed = data.data.et
+                    $.st = data.data.st *1000
+                    $.ed = data.data.et *1000
                     }else{
                         console.log('没有找到参数')
                     }
