@@ -12,12 +12,12 @@
  // quantumultx
  [task_local]
  # 京东小魔方
- 10 20 * * *  https://raw.githubusercontent.com/i-chenzhe/qx/master/jd_xmf.js, tag= 京东小魔方, enabled=true
+ 10 0 * * *   https://raw.githubusercontent.com/i-chenzhe/qx/master/jd_xmf.js, tag= 京东小魔方, enabled=true
  //Loon
  [Script]
- cron "  10 20 * * *  " script-path=https://raw.githubusercontent.com/i-chenzhe/qx/master/jd_xmf.js ,tag= 京东小魔方
+ cron "  10 0 * * *   " script-path=https://raw.githubusercontent.com/i-chenzhe/qx/master/jd_xmf.js ,tag= 京东小魔方
  //Surge
-  京东小魔方 = type=cron,cronexp="  10 20 * * *  ",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/master/jd_xmf.js
+  京东小魔方 = type=cron,cronexp="  10 0 * * *   ",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/master/jd_xmf.js
 * */
 const $ = new Env('京东小魔方');
 const notify = $.isNode() ? require('./sendNotify') : '';
