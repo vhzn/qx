@@ -1,5 +1,6 @@
 /**
  京东小魔方 活动入口：京东app-新品首发-百万京豆
+ 活动好像是持续进行的，cron还是修改成每天运行就好了。
 脚本更新地址：https://raw.githubusercontent.com/i-chenzhe/qx/master/jd_xmf.js
 
 脚本内置了一个给作者任务助力的网络请求，默认开启，如介意请自行关闭。
@@ -11,12 +12,12 @@
  // quantumultx
  [task_local]
  # 京东小魔方
- 10 20 10-13 2 *  https://raw.githubusercontent.com/i-chenzhe/qx/master/jd_xmf.js, tag= 京东小魔方, enabled=true
+ 10 20 * * *  https://raw.githubusercontent.com/i-chenzhe/qx/master/jd_xmf.js, tag= 京东小魔方, enabled=true
  //Loon
  [Script]
- cron " 10 20 10-13 2 *  " script-path=https://raw.githubusercontent.com/i-chenzhe/qx/master/jd_xmf.js ,tag= 京东小魔方
+ cron "  10 20 * * *  " script-path=https://raw.githubusercontent.com/i-chenzhe/qx/master/jd_xmf.js ,tag= 京东小魔方
  //Surge
-  京东小魔方 = type=cron,cronexp=" 10 20 10-13 2 *  ",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/master/jd_xmf.js
+  京东小魔方 = type=cron,cronexp="  10 20 * * *  ",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/master/jd_xmf.js
 * */
 const $ = new Env('京东小魔方');
 const notify = $.isNode() ? require('./sendNotify') : '';
