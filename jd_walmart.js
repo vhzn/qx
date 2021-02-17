@@ -175,7 +175,6 @@ function doTask(function_name, body) {
             cookie = `${resp['headers']['set-cookie'].join(';')}; ${originCookie}`;
           }
           if (data.result === true) {
-            console.log(data);
             console.log('完成任务。')
           } else {
             console.log(data.errorMessage)
