@@ -13,14 +13,14 @@
 ============Quantumultx===============
 [task_local]
 #沃尔玛粉丝互动
-3 0 * 17-28 2 * https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_walmart.js, tag=沃尔玛粉丝互动,  enabled=true
+3 0 * 17-28 2 https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_walmart.js, tag=沃尔玛粉丝互动,  enabled=true
 ================Loon==============
 [Script]
-cron "3 0 * 17-28 2 *" script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_walmart.js,tag=沃尔玛粉丝互动
+cron "3 0 * 17-28 2" script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_walmart.js,tag=沃尔玛粉丝互动
 ===============Surge=================
-沃尔玛粉丝互动 = type=cron,cronexp="3 0 * 17-28 2 *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_walmart.js
+沃尔玛粉丝互动 = type=cron,cronexp="3 0 * 17-28 2",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_walmart.js
 ============小火箭=========
-沃尔玛粉丝互动 = type=cron,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_walmart.js, cronexpr="3 0 * 17-28 2 *", timeout=3600, enable=true
+沃尔玛粉丝互动 = type=cron,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_walmart.js, cronexpr="3 0 * 17-28 2", timeout=3600, enable=true
 */
 
 const $ = new Env('沃尔玛粉丝互动');
