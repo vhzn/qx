@@ -1,8 +1,8 @@
 /*
 粉丝互动
 类似于京东抽奖机，各个店铺的粉丝互动活动。
+又看到新活动可以私信我添加活动ID。
 新手写脚本，难免有bug，能用且用。
-
 
 脚本内置了一个给作者任务助力的网络请求，默认开启，如介意请自行关闭。
 助力活动链接： https://h5.m.jd.com/babelDiy/Zeus/4ZK4ZpvoSreRB92RRo8bpJAQNoTq/index.html
