@@ -135,11 +135,11 @@ function getActContent(doJob = false) {
           if (doJob) {
             console.log(`开始执行 ${$.actInfo.shopName} 的任务`);
             await doTask('wxFansInterActionActivity/followShop', `activityId=${$.ACT_ID}&uuid=${$.actorInfo.uuid}`);
-            if ($.task1Sign.finishedCount === 0) {
+            if ($.task1Sign && $.task1Sign.finishedCount === 0) {
               await doTask('wxFansInterActionActivity/doSign', `activityId=${$.ACT_ID}&uuid=${$.actorInfo.uuid}`);
               await $.wait(1000);
             }
-            if ($.task2BrowGoods.finishedCount !== $.task2BrowGoods.upLimit) {
+            if ($.task2BrowGoods && $.task2BrowGoods.finishedCount !== $.task2BrowGoods.upLimit) {
               for (let vo of $.task2BrowGoods.taskGoodList) {
                 if (vo.finished === false) {
                   await doTask('wxFansInterActionActivity/doBrowGoodsTask', `activityId=${$.ACT_ID}&uuid=${$.actorInfo.uuid}&skuId=${vo.skuId}`);
@@ -147,7 +147,7 @@ function getActContent(doJob = false) {
                 await $.wait(1000);
               }
             }
-            if ($.task3AddCart.finishedCount !== $.task3AddCart.upLimit) {
+            if ($.task3AddCart && $.task3AddCart.finishedCount !== $.task3AddCart.upLimit) {
               for (let vo of $.task3AddCart.taskGoodList) {
                 if (vo.finished === false) {
                   await doTask('wxFansInterActionActivity/doAddGoodsTask', `activityId=${$.ACT_ID}&uuid=${$.actorInfo.uuid}&skuId=${vo.skuId}`);
@@ -155,23 +155,23 @@ function getActContent(doJob = false) {
                 await $.wait(1000);
               }
             }
-            if ($.task4Share.finishedCount !== $.task4Share.upLimit) {
+            if ($.task4Share && $.task4Share.finishedCount !== $.task4Share.upLimit) {
               for (let i = 0; i < $.task4Share.upLimit; i++) {
                 await doTask('wxFansInterActionActivity/doShareTask', `activityId=${$.ACT_ID}&uuid=${$.actorInfo.uuid}`);
                 await $.wait(1000);
               }
             }
-            if ($.task5Remind.finishedCount !== $.task5Remind.upLimit) {
+            if ($.task5Remind && $.task5Remind.finishedCount !== $.task5Remind.upLimit) {
               await doTask('wxFansInterActionActivity/doRemindTask', `activityId=${$.ACT_ID}&uuid=${$.actorInfo.uuid}`);
               await $.wait(1000);
             }
-            if ($.task6GetCoupon.finishedCount !== $.task6GetCoupon.upLimit) {
+            if ($.task6GetCoupon && $.task6GetCoupon.finishedCount !== $.task6GetCoupon.upLimit) {
               for (let i = 0; i < $.task6GetCoupon.taskCouponInfoList.length; i++) {
                 await doTask('wxFansInterActionActivity/doGetCouponTask', `activityId=${$.ACT_ID}&uuid=${$.actorInfo.uuid}&couponId=${$.task6GetCoupon.taskCouponInfoList[i].couponId}`);
                 await $.wait(1000);
               }
             }
-            if ($.task7MeetPlaceVo.finishedCount !== $.task7MeetPlaceVo.upLimit) {
+            if ($.task7MeetPlaceVo && $.task7MeetPlaceVo.finishedCount !== $.task7MeetPlaceVo.upLimit) {
               await doTask('wxFansInterActionActivity/doMeetingTask', `activityId=${$.ACT_ID}&uuid=${$.actorInfo.uuid}`);
             }
           } else {
