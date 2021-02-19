@@ -11,7 +11,7 @@
 
 更新地址：https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_mlyjy.js
 脚本仅支持Node环境，手机上的均不支持。
-cron 23 9,13,20 * *
+cron 23 9,13,20 * * *
 */
 const $ = new Env('美丽颜究院');
 const WebSocket = require("ws");
