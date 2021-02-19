@@ -18,6 +18,7 @@ const $ = new Env('美丽颜究院');
 const WebSocket = require("ws");
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
+const needNotify = true;
 const productMachinel = {};
 const materialWaitForProduce = { "base": [], "high": [], "special": [] };
 const hasProducePosition = {}
@@ -381,7 +382,9 @@ function yjy() {
 }
 
 async function showMsg() {
-    await notify.sendNotify(`${$.name}`, `\n\n本次运行共获得${$.coins}个金币\n共获得京豆 ${$.bean} 个\n游戏账户总计金币${$.coins + $.userInfo.coins + $.deCoins}\n脚本还不够完善，持续更新中。`);
+    if (needNotify) {
+        await notify.sendNotify(`${$.name} - 京东账号${$.index} ${$.nickName || $.UserName}`, `\n本次运行共获得${$.coins}个金币\n共获得京豆 ${$.bean} 个\n游戏账户总计金币${$.coins + $.userInfo.coins + $.deCoins}\n脚本还不够完善，持续更新中。`);
+    }
 }
 
 async function signIn() {
