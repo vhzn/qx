@@ -384,13 +384,13 @@ async function showMsg() {
 }
 
 async function signIn() {
-    if ($.hours === 8) {
+    if ($.hours === 9) {
         ws.send(JSON.stringify(msg.sign_in_1));
         await $.wait(500);
         ws.send(JSON.stringify(msg.sign_in_2));
         await $.wait(2000);
     } else {
-        console.log('请在0点-2点期间签到\n');
+        console.log('请在9点签到\n');
     }
 }
 async function productProduce() {
