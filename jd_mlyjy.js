@@ -15,7 +15,9 @@
 cron 23 9,13,20 * * *
 */
 const $ = new Env('美丽颜究院');
+const { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } = require("constants");
 const WebSocket = require("ws");
+const { sendNotify } = require("./sendNotify.js");
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 const needNotify = true;
@@ -71,7 +73,11 @@ let msg = {
   //获取福利列表 请求
   get_benefit: { "msg": { "type": "action", "args": {}, "action": "get_benefit" } },
   //兑换奖品 请求
-  to_exchange: { "msg": { "type": "action", "args": { "benefit_id": 0 }, "action": "to_exchange" } }
+  to_exchange: { "msg": { "type": "action", "args": { "benefit_id": 0 }, "action": "to_exchange" } },
+  //获取任务 请求
+  get_task: { "msg": { "type": "action", "args": {}, "action": "get_task" } },
+  //完成任务 请求
+  complete_task: { "msg": { "type": "action", "args": { "task_id": 1 }, "action": "complete_task" } },
 };
 
 
@@ -126,6 +132,7 @@ function yjy() {
     $.deCoins = 0;
     $.risk = false;
     $.newUser = false;
+    $.doSell = true;
     $.hours = (new Date).getHours();
     await grantTokenKey();
     await grantToken();
@@ -162,6 +169,40 @@ function yjy() {
             if (data.code === 200) {
               $.coins += data.data.coins;
               console.log(`完成三餐签到任务，获得${data.data.coins}个金币\n`);
+            } else {
+              console.log(`异常：${data.msg}\n`);
+            }
+            break;
+          case 'check_up_receive':
+            if (data.code === 200) {
+              $.coins += data.data.coins;
+              console.log(`完成三餐签到任务，获得${data.data.coins}个金币\n`);
+            } else {
+              console.log(`异常：${data.msg}\n`);
+            }
+            break;
+          case 'complete_task':
+            if (data.code === 200) {
+              $.coins += data.data.coins;
+              console.log(`完成售卖任务，获得${data.data.coins}个金币\n`);
+            } else {
+              console.log(`异常：${data.msg}\n`);
+            }
+            break;
+          case 'get_task':
+            if (data.code === 200) {
+              $.task = data.data;
+              console.log(`售卖任务：需要${$.task.num}个${$.task.product.name}`);
+              temp = $.inPackageProducts.filter((x) => x.item_id === $.task.product_id)[0];
+              if (temp && temp.num > $.task.num) {
+                msg.complete_task.msg.args.task_id = $.task.id;
+                console.log(` -仓库中的${$.task.product.name}满足任务条件`);
+                ws.send(JSON.stringify(msg.complete_task));
+                $.doSell = true;
+              } else {
+                console.log(`仓库中没有足够的的${$.task.product.name}满足任务条件\n`);
+                $.doSell = false;
+              }
             } else {
               console.log(`异常：${data.msg}\n`);
             }
@@ -370,7 +411,7 @@ function yjy() {
         ws.send(JSON.stringify(msg.stats));
         await $.wait(3000);
         ws.send(JSON.stringify(msg.shopProducts));
-        //执行签到任务
+        // 执行签到任务
         await signIn();
         //执行浏览会场任务
         await meetingplace();
@@ -384,6 +425,8 @@ function yjy() {
         await meterial();
         //产品生产相关操作
         await productProduce();
+        // 执行售卖任务
+        await sellTask();
         //兑换福利
         await exchange();
       }
@@ -404,7 +447,17 @@ async function showMsg() {
     await notify.sendNotify(`${$.name} `, `京东账号${$.index} ${$.nickName || $.UserName}\n本次运行共获得${$.coins}个金币\n共获得京豆 ${$.bean} 个\n游戏账户总计金币${$.coins + $.userInfo.coins + $.deCoins}\n脚本还不够完善，持续更新中。`);
   }
 }
-
+async function sellTask() {
+  console.log('\n开始售卖任务')
+  for (let i = 0; i < 20; i++) {
+    if ($.doSell) {
+      ws.send(JSON.stringify(msg.get_task));
+    } else {
+      break;
+    }
+    await $.wait(3000)
+  }
+}
 async function signIn() {
   if ($.hours === 9) {
     ws.send(JSON.stringify(msg.sign_in_1));
@@ -438,8 +491,11 @@ async function productProduce() {
       if (doTimes) {
         msg.product_produce.msg.args.product_id = vo.id;
         msg.product_produce.msg.args.amount = times.sort()[0];
-        ws.send(JSON.stringify(msg.product_produce));
-        await $.wait(3000)
+        if (times.sort()[0] !== 0) {
+          ws.send(JSON.stringify(msg.product_produce));
+          await $.wait(3000)
+        }
+
       } else {
         continue;
       }
