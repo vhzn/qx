@@ -12,10 +12,9 @@
 
 更新地址：https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_mlyjy.js
 脚本仅支持Node环境，手机上的均不支持。
-cron 23 9,13,20 * * *
+23 9,13,20 * * *  推荐Corn设置
 */
 const $ = new Env('美丽颜究院');
-const { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } = require("constants");
 const WebSocket = require("ws");
 const { sendNotify } = require("./sendNotify.js");
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
