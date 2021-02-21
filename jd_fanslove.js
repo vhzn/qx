@@ -27,7 +27,6 @@ const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 let cookiesArr = [], cookie = '', originCookie = '', message = '';
 let helpAuthor = true;//为作者助力的开关
-const ACT_ID_List = ['eda317007dff44c2b23e513df195862d', 'f28f6b74a1714451acb7f8b7cdb2527a','8194c0e37a5543da94be8fe5c4caee74',];
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item])
@@ -47,6 +46,7 @@ if ($.isNode()) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', { "open-url": "https://bean.m.jd.com/bean/signIndex.action" });
     return;
   }
+  await getACT_ID();
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i]
@@ -67,11 +67,16 @@ if ($.isNode()) {
       if (helpAuthor) {
         new Promise(resolve => { $.get({ url: 'https://api.r2ray.com/jd.bargain/index' }, (err, resp, data) => { try { if (data) { $.dataGet = JSON.parse(data); if ($.dataGet.data.length !== 0) { let opt = { url: `https://api.m.jd.com/client.action`, headers: { 'Host': 'api.m.jd.com', 'Content-Type': 'application/x-www-form-urlencoded', 'Origin': 'https://h5.m.jd.com', 'Accept-Encoding': 'gzip, deflate, br', 'Cookie': cookie, 'Connection': 'keep-alive', 'Accept': 'application/json, text/plain, */*', 'User-Agent': 'jdapp;iPhone;9.4.0;14.3;;network/wifi;ADID/;supportApplePay/0;hasUPPay/0;hasOCPay/0;model/iPhone10,3;addressid/;supportBestPay/0;appBuild/167541;jdSupportDarkMode/0;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1', 'Referer': `https://h5.m.jd.com/babelDiy/Zeus/4ZK4ZpvoSreRB92RRo8bpJAQNoTq/index.html?serveId=wxe30973feca923229&actId=${$.dataGet.data[0].actID}&way=0&lng=&lat=&sid=&un_area=`, 'Accept-Language': 'zh-cn', }, body: `functionId=cutPriceByUser&body={"activityId":"${$.dataGet.data[0].actID}","userName":"","followShop":1,"shopId":${$.dataGet.data[0].actsID},"userPic":""}&client=wh5&clientVersion=1.0.0` }; return new Promise(resolve => { $.post(opt, (err, ersp, data) => { }) }); } } } catch (e) { console.log(e); } finally { resolve(); } }) })
       }
-      for (let i = 0; i < ACT_ID_List.length; i++) {
-        $.ACT_ID = ACT_ID_List[i];
-        await fansLove();
+      $.sendNotify = false;
+      if ($.ACT_IDarr.length > 0) {
+        for (let i = 0; i < $.ACT_IDarr.length; i++) {
+          $.ACT_ID = $.ACT_IDarr[i].ACT_ID;
+          await fansLove();
+        }
       }
-
+      if ($.sendNotify) {
+        await notify.sendNotify(`${$.name}`, `京东账号${$.index} ${$.UserName}\n${message}`);
+      }
     }
   }
 })()
@@ -206,14 +211,25 @@ function doTask(function_name, body) {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
         } else {
-          data = JSON.parse(data);
-          if (resp['headers']['set-cookie']) {
-            cookie = `${resp['headers']['set-cookie'].join(';')}; ${originCookie}`;
-          }
-          if (data.result === true) {
-            console.log('请求正常。')
-          } else {
-            console.log(data.errorMessage)
+          if (safeGet(data)) {
+            data = JSON.parse(data);
+            if (resp['headers']['set-cookie']) {
+              cookie = `${resp['headers']['set-cookie'].join(';')}; ${originCookie}`;
+            }
+            if (data.data !== null && data.result === true) {
+              console.log('请求正常。')
+              if (data.data.hasOwnProperty('drawOk')) {
+                if (data.data.drawOk === true) {
+                  console.log(`恭喜中奖，获得:${data.data.name}`);
+                  if (data.data.name.indexOf('京豆')) {
+                    message += `恭喜中奖，获得:${data.data.name}\n`
+                  } else {
+                    message += `恭喜中奖，获得:${data.data.name}\n活动店铺${$.actInfo.shopName}\n领奖地址:https://lzkjdz-isv.isvjcloud.com/wxFansInterActionActivity/activity/${$.ACT_ID}?activityId=${$.ACT_ID}&adsource=tg_storePage`
+                  }
+                  $.sendNotify = true;
+                }
+              }
+            }
           }
         }
       } catch (e) {
@@ -418,6 +434,31 @@ function taskPostUrl(function_id, body) {
     },
     body: body,
   }
+}
+function getACT_ID() {
+  return new Promise(async resolve => {
+    $.get({ url: `https://api.r2ray.com/jd.fanslove/index?ts=${Date.now()}` }, (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+        } else {
+          if (data) {
+            data = JSON.parse(data);
+            if (data.data.length > 0) {
+              $.ACT_IDarr = data.data;
+              console.log('获取活动信息成功');
+            } else {
+              $.ACT_IDarr = [];
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve(data);
+      }
+    })
+  })
 }
 function TotalBean() {
   return new Promise(async resolve => {
