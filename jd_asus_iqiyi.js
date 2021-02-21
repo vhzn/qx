@@ -7,7 +7,7 @@
 助力活动链接： https://h5.m.jd.com/babelDiy/Zeus/4ZK4ZpvoSreRB92RRo8bpJAQNoTq/index.html
 参数 helpAuthor = false
 
-1 0 22-28 2 * https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_asus_iyiqi.js
+1 0 22-28 2 * https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_asus_iqiyi yi.js
 */
 const $ = new Env('华硕-爱奇艺');
 const Dt = require('crypto-js');
