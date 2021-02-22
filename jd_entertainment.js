@@ -117,7 +117,7 @@ async function entertainment() {
     await draw();
     console.log(`好友助力码【 ${$.shareCode} 】`);
     await submitShareCode({ 'share_code': $.shareCode, 'pt_key': $.UserName });
-
+  
   } else {
     if ($.isNode()) {
       await notify.sendNotify(`${$.name}运行完成`, `京东账号${$.index} ${$.nickName || $.UserName}\n京东说‘本活动与你无缘，请关注其他活动。’`);
@@ -160,18 +160,21 @@ async function answer() {
     console.log(`已经答对所有题目了。`)
     return;
   }
-  for (let i = 0; i <= $.gameScore; i++) {
-    for (let o = 0; o < newCardList.length; o++) {
-      let options = '';
-      const tmp = questionList.filter((x) => x.q === newCardList[o].uuid);
-      if (tmp && tmp[0]) {
-        console.log(`在本地题库中找到了答案：${tmp[0].a}`)
-        options = tmp[0].a
-      }
-      let body = `activityId=${ACT_ID}&actorUuid=${$.shareCode}&pin=${encodeURIComponent($.secretPin)}&uuid=${newCardList[o].uuid}&answer=${encodeURIComponent(options)}&position=${newPosition[o]}`
-      await doTask('dingzhi/change/able/answer', body);
-      await $.wait(1500)
+  if (newCardList.length<$.gameScore) {
+    times = newCardList.length
+  }else{
+    times = $.gameScore
+  }
+  for (let i = 0; i <= times; i++) {
+    let options = '';
+    const tmp = questionList.filter((x) => x.q === newCardList[i].uuid);
+    if (tmp && tmp[0]) {
+      console.log(`在本地题库中找到了答案：${tmp[0].a}`)
+      options = tmp[0].a
     }
+    let body = `activityId=${ACT_ID}&actorUuid=${$.shareCode}&pin=${encodeURIComponent($.secretPin)}&uuid=${newCardList[i].uuid}&answer=${encodeURIComponent(options)}&position=${newPosition[i]}`
+    await doTask('dingzhi/change/able/answer', body);
+    await $.wait(1500)
   }
 }
 async function getActContent(done = true, authorShareCode = '') {
