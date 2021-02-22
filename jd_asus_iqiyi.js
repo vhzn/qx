@@ -3,7 +3,7 @@
 活动地址:https://asusiqiyi.jd.com
 没有添加助力环节，仅完成可能获得京豆的任务；
 新手写脚本，难免有bug，能用且用。
-非常感谢 lxk0301 大佬的知道，让这个脚本支持了手机端运行。
+非常感谢 lxk0301 大佬的指导，让这个脚本支持了手机端运行。
 
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
