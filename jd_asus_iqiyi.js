@@ -1,9 +1,23 @@
 /*
 华硕-爱奇艺
-仅支持Node，没有添加助力环节，仅完成可能获得京豆的任务；
+活动地址:https://asusiqiyi.jd.com
+没有添加助力环节，仅完成可能获得京豆的任务；
 新手写脚本，难免有bug，能用且用。
+非常感谢 lxk0301 大佬的知道，让这个脚本支持了手机端运行。
 
-1 0 22-28 2 * https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_asus_iqiyi.js
+已支持IOS双京东账号,Node.js支持N个京东账号
+脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
+============Quantumultx===============
+[task_local]
+#华硕-i qi yi
+0 0 22-28 2 * https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_entertainment.js, tag=华硕-iqiyi, enabled=true
+================Loon==============
+[Script]
+cron "0 0 22-28 2 *" script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_asus_iqiyi.js,tag=华硕-iqiyi
+===============Surge=================
+华硕-iqiyi = type=cron,cronexp="0 0 22-28 2 *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_asus_iqiyi.js
+============小火箭=========
+华硕-iqiyi = type=cron,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_asus_iqiyi.js, cronexpr="0 0 22-28 2 *", timeout=3600, enable=true
 
 脚本内置了一个给作者任务助力的网络请求，默认开启，如介意请自行关闭。
 助力活动链接： https://h5.m.jd.com/babelDiy/Zeus/4ZK4ZpvoSreRB92RRo8bpJAQNoTq/index.html
