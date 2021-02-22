@@ -68,9 +68,12 @@ if ($.isNode()) {
       $.bean = 0;
       await ASUS_iqiyi();
       if ($.bean > 10) {
-        await notify.sendNotify(`${$.name} - ${$.UserName}`, `恭喜抢到${$.bean}个京豆`);
+        if ($.isNode()) {
+          await notify.sendNotify(`${$.name} - ${$.UserName}`, `恭喜抢到${$.bean}个京豆`);
+        } else {
+          $.msg(`${$.name}`, `${$.UserName}`, `恭喜抢到${$.bean}个京豆`);
+        }
       }
-
     }
   }
 })()
