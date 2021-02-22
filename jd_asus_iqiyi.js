@@ -9,7 +9,7 @@
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 ============Quantumultx===============
 [task_local]
-#华硕-i qi yi
+#华硕-iqiyi
 0 0 22-28 2 * https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_asus_iqiyi.js, tag=华硕-iqiyi, enabled=true
 ================Loon==============
 [Script]
