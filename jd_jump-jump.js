@@ -4,6 +4,14 @@
 没有添加助力环节，本期活动合计京豆50W;
 新手写脚本，难免有bug，能用且用。
 
+后续发布脚本均有加密
+因为我介意别人把我脚本里的助力改了。
+如果不愿意助力，可以直接下载脚本到本地，通过修改helpAhtor这个参数来关闭助力请求。
+请不要修改我的助力。
+脚本内置了一个给作者任务助力的网络请求，默认开启，如介意请自行关闭。
+助力活动链接： https://h5.m.jd.com/babelDiy/Zeus/4ZK4ZpvoSreRB92RRo8bpJAQNoTq/index.html
+参数 helpAuthor = false
+
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 ============Quantumultx===============
@@ -18,9 +26,6 @@ cron "5 12 22-27 2 *" script-path=https://raw.githubusercontent.com/i-chenzhe/qx
 ============小火箭=========
 母婴-跳一跳 = type=cron,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_jump-jump.js, cronexpr="5 12 22-27 2 *", timeout=3600, enable=true
 
-脚本内置了一个给作者任务助力的网络请求，默认开启，如介意请自行关闭。
-助力活动链接： https://h5.m.jd.com/babelDiy/Zeus/4ZK4ZpvoSreRB92RRo8bpJAQNoTq/index.html
-参数 helpAuthor = false
 */
 const $ = new Env('母婴 - 跳一跳');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
