@@ -9,14 +9,14 @@
 ============Quantumultx===============
 [task_local]
 #母婴-跳一跳
-5 12 22-27 2 *https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_jump-jump.js, tag=母婴-跳一跳, enabled=true
+5 12 22-27 2 * https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_jump-jump.js, tag=母婴-跳一跳, enabled=true
 ================Loon==============
 [Script]
-cron "5 12 22-27 2 **" script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_jump-jump.js,tag=母婴-跳一跳
+cron "5 12 22-27 2 *" script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_jump-jump.js,tag=母婴-跳一跳
 ===============Surge=================
-母婴-跳一跳 = type=cron,cronexp="5 12 22-27 2 **",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_jump-jump.js
+母婴-跳一跳 = type=cron,cronexp="5 12 22-27 2 *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_jump-jump.js
 ============小火箭=========
-母婴-跳一跳 = type=cron,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_jump-jump.js, cronexpr="5 12 22-27 2 **", timeout=3600, enable=true
+母婴-跳一跳 = type=cron,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_jump-jump.js, cronexpr="5 12 22-27 2 *", timeout=3600, enable=true
 
 脚本内置了一个给作者任务助力的网络请求，默认开启，如介意请自行关闭。
 助力活动链接： https://h5.m.jd.com/babelDiy/Zeus/4ZK4ZpvoSreRB92RRo8bpJAQNoTq/index.html
