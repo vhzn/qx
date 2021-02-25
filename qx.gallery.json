@@ -2,19 +2,19 @@
     "name": "一堆Bug",
     "task": [
       {
-        "config": "5 8,14,20 22-27 2 * https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_jump-jump.js, tag=母婴-跳一跳, enabled=true"
+        "config": "5 8,14,20 22-27 2 * https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_jump-jump.js , img-url=https://raw.githubusercontent.com/i-chenzhe/qx/main/img/icon.png , tag=母婴-跳一跳, enabled=true"
       },
       {
-        "config": "10 13 23-28,1 2-3 * https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_gjmh.js, tag=国际盲盒, enabled=true"
+        "config": "10 13 23-28,1 2-3 * https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_gjmh.js , img-url=https://raw.githubusercontent.com/i-chenzhe/qx/main/img/icon.png , tag=国际盲盒, enabled=true"
       },
       {
-        "config": "3 10 * * * https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_fanslove.js, tag=粉丝互动,  enabled=true"
+        "config": "3 10 * * * https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_fanslove.js , img-url=https://raw.githubusercontent.com/i-chenzhe/qx/main/img/icon.png , tag=粉丝互动,  enabled=true"
       },
       {
-        "config": "10 10,11 * * 2-5 https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_entertainment.js, tag=百变大咖秀,  enabled=true"
+        "config": "10 10,11 * * 2-5 https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_entertainment.js , img-url=https://raw.githubusercontent.com/i-chenzhe/qx/main/img/icon.png , tag=百变大咖秀,  enabled=true"
       },
       {
-        "config": "0 0 22-28 2 * https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_asus_iqiyi.js, tag=华硕-iqiyi, enabled=true"
+        "config": "0 0 22-28 2 * https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_asus_iqiyi.js , img-url=https://raw.githubusercontent.com/i-chenzhe/qx/main/img/icon.png , tag=华硕-iqiyi, enabled=true"
       }
     ],
     "description": "https://github.com/i-chenzhe/qx"
