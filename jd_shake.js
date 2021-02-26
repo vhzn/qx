@@ -11,15 +11,15 @@
 更新地址：https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_shake.js
 ============Quantumultx===============
 [task_local]
-#粉丝互动
-3 20 * * * https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_shake.js, tag=粉丝互动,  enabled=true
+#摇一摇
+3 20 * * * https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_shake.js, tag=摇一摇,  enabled=true
 ================Loon==============
 [Script]
-cron "3 20 * * *" script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_shake.js,tag=粉丝互动
+cron "3 20 * * *" script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_shake.js,tag=摇一摇
 ===============Surge=================
-粉丝互动 = type=cron,cronexp="3 20 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_shake.js
+摇一摇 = type=cron,cronexp="3 20 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_shake.js
 ============小火箭=========
-粉丝互动 = type=cron,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_shake.js, cronexpr="3 20 * * *", timeout=3600, enable=true
+摇一摇 = type=cron,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_shake.js, cronexpr="3 20 * * *", timeout=3600, enable=true
 */
 const $ = new Env('超级摇一摇');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
