@@ -9,15 +9,14 @@
 ============Quantumultx===============
 [task_local]
 #母婴-跳一跳
-5 8,14,20 22-27 2 * https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_jump-jump.js, tag=母婴-跳一跳, enabled=true
+5 8,14,20 2-7 2 * https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_jump-jump.js, tag=母婴-跳一跳, enabled=true
 ================Loon==============
 [Script]
-cron "5 8,14,20 22-27 2 *" script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_jump-jump.js,tag=母婴-跳一跳
+cron "5 8,14,20 2-7 2 *" script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_jump-jump.js,tag=母婴-跳一跳
 ===============Surge=================
-母婴-跳一跳 = type=cron,cronexp="5 8,14,20 22-27 2 *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_jump-jump.js
+母婴-跳一跳 = type=cron,cronexp="5 8,14,20 2-7 2 *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_jump-jump.js
 ============小火箭=========
-母婴-跳一跳 = type=cron,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_jump-jump.js, cronexpr="5 8,14,20 22-27 2 *", timeout=3600, enable=true
-
+母婴-跳一跳 = type=cron,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_jump-jump.js, cronexpr="5 8,14,20 2-7 2 *", timeout=3600, enable=true
 */
 const $ = new Env('母婴 - 跳一跳');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
